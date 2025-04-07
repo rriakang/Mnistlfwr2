@@ -1,0 +1,30 @@
+[2025-04-07 12:21:07,823][root][ERROR] - No read global model
+[2025-04-07 12:21:07,823][root][INFO] - gl_model: None, gl_model_v: 0
+[2025-04-07 12:21:07,840][root][INFO] - last_gl_model_v: 0
+[2025-04-07 12:21:07,840][root][INFO] - init global model making
+[2025-04-07 12:21:07,884][flwr][WARNING] - DEPRECATED FEATURE: flwr.server.start_server() is deprecated.
+	Instead, use the `flower-superlink` CLI command to start a SuperLink as shown below:
+
+		$ flower-superlink --insecure
+
+	To view usage and all available options, run:
+
+		$ flower-superlink --help
+
+	Using `start_server()` is deprecated.
+
+            This is a deprecated feature. It will be removed
+            entirely in future versions of Flower.
+        
+[2025-04-07 12:21:07,886][flwr][INFO] - Starting Flower server, config: num_rounds=2, no round_timeout
+[2025-04-07 12:21:07,903][flwr][INFO] - Flower ECE: gRPC server running (2 rounds), SSL is disabled
+[2025-04-07 12:21:07,903][flwr][INFO] - [INIT]
+[2025-04-07 12:21:07,903][flwr][INFO] - Using initial global parameters provided by strategy
+[2025-04-07 12:21:07,903][flwr][INFO] - Starting evaluation of initial global parameters
+[2025-04-07 12:21:10,830][flwr][INFO] - initial parameters (loss, other metrics): 2.3042892926855933, {'accuracy': 0.1009, 'f1_score': 0.018517297198981448}
+[2025-04-07 12:21:10,830][flwr][INFO] - 
+[2025-04-07 12:21:10,830][flwr][INFO] - [ROUND 1]
+[2025-04-07 12:21:10,831][root][INFO] - server start by round
+[2025-04-07 12:32:56,462][flwr][INFO] - Flower server terminated gracefully.
+[2025-04-07 12:32:56,463][root][INFO] - server close
+[2025-04-07 12:32:56,478][root][INFO] - global model version upgrade
