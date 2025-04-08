@@ -9,13 +9,14 @@ import json
 import time
 import numpy as np
 import shutil
-# from . import server_api
-# from . import server_utils
-import server_api
-import server_utils
+from . import server_api
+from . import server_utils
+# import server_api
+# import server_utils
 from collections import OrderedDict
 from hydra.utils import instantiate
-from server_cluster import GeneticCFLStrategy
+from .server_cluster import GeneticCFLStrategy
+# from server_cluster import GeneticCFLStrategy
 # TF warning log filtering
 # os.environ["TF_CPP_MIN_LOG_LEVEL"] = "3"
 
