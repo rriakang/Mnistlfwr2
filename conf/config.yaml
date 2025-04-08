@@ -3,9 +3,9 @@ random_seed: 42
 
 learning_rate: 0.001 # Input model's learning rate
 
-model_type: 'Pytorch'
+# model_type: 'Pytorch'
  # This value should be maintained
-# model_type: 'hyperparameter' # This value should be maintained
+model_type: 'hyperparameter' # This value should be maintained
 model:
   _target_: models.MNISTClassifier # Input your custom model
   output_size: 10 # Input your model's output size (only classification)
@@ -31,6 +31,7 @@ batch_size: 128
 num_rounds: 2 # Number of rounds to perform
 clients_per_round: 1 # Number of clients participating in the round
 
+
 server:
   strategy:
     _target_: flwr.server.strategy.FedAvg # aggregation algorithm (defalut: fedavg)
@@ -39,3 +40,9 @@ server:
     min_fit_clients: ${clients_per_round} # Minimum number of clients to participate in training
     min_available_clients: ${clients_per_round} # Minimum number of clients to participate in a round
     min_evaluate_clients: ${clients_per_round} # Minimum number of clients to participate in evaluation
+    on_fit_config_fn:
+      _target_: fedops.server_config.get_on_fit_config
+      learning_rate: ${learning_rate} # ✅ 이렇게 해야 전달 가능
+      batch_size: ${batch_size}
+      local_epochs: ${num_epochs}
+      num_rounds: ${num_rounds}

@@ -233,6 +233,7 @@ class FLServer():
             "batch_size": self.batch_size,
             "local_epochs": self.local_epochs,
             "num_rounds": self.num_rounds,
+            "learning_rate" : self.learning_rate
         }
 
         # increase round
@@ -334,7 +335,7 @@ class FLServer():
     #     self.next_model, self.next_model_name, self.server.last_gl_model_v = server_utils.model_download_s3(self.task_id, self.model_type, self.init_model)
         
     #     # Loaded last global model or no global model in local
-    #     # self.next_model, self.next_model_name, self.server.latest_gl_model_v = server_utils.model_download_local(self.model_type, self.init_model)
+    #     # self.next_model, self.next_model_name, self.server.laㅌtest_gl_model_v = server_utils.model_download_local(self.model_type, self.init_model)
 
     #     # logging.info('Loaded latest global model or no global model')
 

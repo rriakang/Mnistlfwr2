@@ -73,3 +73,4 @@ KeyError: 'learning_rate'
 [2025-04-08 13:12:22,557][flwr][DEBUG] - gRPC channel closed
 [2025-04-08 13:12:22,588][root][INFO] - notify_fail start
 [2025-04-08 13:12:22,606][root][ERROR] - trainFin
+[2025-04-08 13:19:38,428][root][INFO] - ccl-e-server;b0:7b:25:0e:e7:96-client close

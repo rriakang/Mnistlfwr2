@@ -1,0 +1,15 @@
+{"time":"2025-04-08T13:28:40.242000757+09:00","level":"INFO","msg":"stream: starting","core version":"0.19.9","symlink path":"/home/ccl/safer/FedOps/MNIST/wandb/run-20250408_132840-rmyk818p/logs/debug-core.log"}
+{"time":"2025-04-08T13:28:40.673415694+09:00","level":"INFO","msg":"created new stream","id":"rmyk818p"}
+{"time":"2025-04-08T13:28:40.673513208+09:00","level":"INFO","msg":"stream: started","id":"rmyk818p"}
+{"time":"2025-04-08T13:28:40.673546506+09:00","level":"INFO","msg":"sender: started","stream_id":"rmyk818p"}
+{"time":"2025-04-08T13:28:40.673551343+09:00","level":"INFO","msg":"handler: started","stream_id":"rmyk818p"}
+{"time":"2025-04-08T13:28:40.674473737+09:00","level":"INFO","msg":"writer: Do: started","stream_id":"rmyk818p"}
+{"time":"2025-04-08T13:28:40.97467429+09:00","level":"INFO","msg":"Starting system monitor"}
+{"time":"2025-04-08T13:31:52.090384163+09:00","level":"INFO","msg":"stream: closing","id":"rmyk818p"}
+{"time":"2025-04-08T13:31:52.090438056+09:00","level":"INFO","msg":"Stopping system monitor"}
+{"time":"2025-04-08T13:31:52.09049192+09:00","level":"INFO","msg":"Stopped system monitor"}
+{"time":"2025-04-08T13:31:52.907474298+09:00","level":"INFO","msg":"fileTransfer: Close: file transfer manager closed"}
+{"time":"2025-04-08T13:31:53.226587368+09:00","level":"INFO","msg":"handler: closed","stream_id":"rmyk818p"}
+{"time":"2025-04-08T13:31:53.226692743+09:00","level":"INFO","msg":"sender: closed","stream_id":"rmyk818p"}
+{"time":"2025-04-08T13:31:53.226671792+09:00","level":"INFO","msg":"writer: Close: closed","stream_id":"rmyk818p"}
+{"time":"2025-04-08T13:31:53.226879593+09:00","level":"INFO","msg":"stream: closed","id":"rmyk818p"}

@@ -1,0 +1,108 @@
+[93mWARNING [0m:   DEPRECATED FEATURE: flwr.client.start_numpy_client() is deprecated.
+	Instead, use `flwr.client.start_client()` by ensuring you first call the `.to_client()` method as shown below:
+	flwr.client.start_client(
+		server_address='<IP>:<PORT>',
+		client=FlowerClient().to_client(), # <-- where FlowerClient is of type flwr.client.NumPyClient object
+	)
+	Using `start_numpy_client()` is deprecated.
+
+            This is a deprecated feature. It will be removed
+            entirely in future versions of Flower.
+
+[2025-04-08 13:23:41,330][flwr][WARNING] - DEPRECATED FEATURE: flwr.client.start_numpy_client() is deprecated.
+	Instead, use `flwr.client.start_client()` by ensuring you first call the `.to_client()` method as shown below:
+	flwr.client.start_client(
+		server_address='<IP>:<PORT>',
+		client=FlowerClient().to_client(), # <-- where FlowerClient is of type flwr.client.NumPyClient object
+	)
+	Using `start_numpy_client()` is deprecated.
+
+            This is a deprecated feature. It will be removed
+            entirely in future versions of Flower.
+
+[93mWARNING [0m:   DEPRECATED FEATURE: flwr.client.start_client() is deprecated.
+	Instead, use the `flower-supernode` CLI command to start a SuperNode as shown below:
+
+		$ flower-supernode --insecure --superlink='<IP>:<PORT>'
+
+	To view all available options, run:
+
+		$ flower-supernode --help
+
+	Using `start_client()` is deprecated.
+
+            This is a deprecated feature. It will be removed
+            entirely in future versions of Flower.
+
+[2025-04-08 13:23:41,331][flwr][WARNING] - DEPRECATED FEATURE: flwr.client.start_client() is deprecated.
+	Instead, use the `flower-supernode` CLI command to start a SuperNode as shown below:
+
+		$ flower-supernode --insecure --superlink='<IP>:<PORT>'
+
+	To view all available options, run:
+
+		$ flower-supernode --help
+
+	Using `start_client()` is deprecated.
+
+            This is a deprecated feature. It will be removed
+            entirely in future versions of Flower.
+
+[2025-04-08 13:23:41,345][flwr][DEBUG] - Opened insecure gRPC connection (no certificates were passed)
+[2025-04-08 13:23:41,349][flwr][DEBUG] - ChannelConnectivity.IDLE
+[2025-04-08 13:23:41,350][flwr][DEBUG] - ChannelConnectivity.CONNECTING
+[2025-04-08 13:23:41,353][flwr][DEBUG] - ChannelConnectivity.READY
+[92mINFO [0m:
+[2025-04-08 13:23:43,240][flwr][INFO] -
+[92mINFO [0m:      Received: train message b87f9ce3-e7ba-4bfb-87b9-89816919fb90
+[2025-04-08 13:23:43,240][flwr][INFO] - Received: train message b87f9ce3-e7ba-4bfb-87b9-89816919fb90
+config: {'batch_size': 128, 'local_epochs': 1, 'num_rounds': 2}
+Starting training...
+Epoch 1/1: 100%|██████████████████████████████████████████████████████████████████████████████████████████████████████| 282/282 [00:14<00:00, 19.16batch/s]
+Starting evalutation...
+Testing: 100%|████████████████████████████████████████████████████████████████████████████████████████████████████████| 282/282 [00:08<00:00, 31.82batch/s]
+Starting evalutation...
+Testing: 100%|██████████████████████████████████████████████████████████████████████████████████████████████████████████| 94/94 [00:02<00:00, 31.93batch/s]
+[2025-04-08 13:24:09,846][client_fl][INFO] - train_performance - {"fl_task_id": "mnist", "client_mac": "b0:7b:25:0e:e7:96", "client_name": "ccl-e-server", "round": 1, "gl_model_v": 1, "train_loss": 0.057969573287438625, "train_accuracy": 0.9827777777777778, "train_f1_score": 0.9827900570624604, "val_loss": 0.06256388358652909, "val_accuracy": 0.9794166666666667, "val_f1_score": 0.9794164558256907, "train_time": 26.59491729736328, "wandb_name": "ccl-e-server-v0(2025-04-08 13:21:38.657079)"}
+[92mINFO [0m:      Sent reply
+[2025-04-08 13:24:09,905][flwr][INFO] - Sent reply
+[92mINFO [0m:
+[2025-04-08 13:24:16,364][flwr][INFO] -
+[92mINFO [0m:      Received: evaluate message a52a6bb4-2e85-48c2-abc3-419a74d35c92
+[2025-04-08 13:24:16,365][flwr][INFO] - Received: evaluate message a52a6bb4-2e85-48c2-abc3-419a74d35c92
+Starting evalutation...
+Testing: 100%|██████████████████████████████████████████████████████████████████████████████████████████████████████████| 94/94 [00:03<00:00, 30.72batch/s]
+[2025-04-08 13:24:19,453][client_fl][INFO] - test - {"fl_task_id": "mnist", "client_mac": "b0:7b:25:0e:e7:96", "client_name": "ccl-e-server", "round": 1, "test_loss": 0.06677746654864639, "test_accuracy": 0.9801666666666666, "gl_model_v": 1, "wandb_name": "ccl-e-server-v0(2025-04-08 13:21:38.657079)"}
+[92mINFO [0m:      Sent reply
+[2025-04-08 13:24:19,469][flwr][INFO] - Sent reply
+[92mINFO [0m:
+[2025-04-08 13:24:21,374][flwr][INFO] -
+[92mINFO [0m:      Received: train message 96855e7b-f822-4d7f-9786-ec64aefaeccc
+[2025-04-08 13:24:21,375][flwr][INFO] - Received: train message 96855e7b-f822-4d7f-9786-ec64aefaeccc
+config: {'batch_size': 128, 'local_epochs': 1, 'num_rounds': 2}
+Starting training...
+Epoch 1/1: 100%|██████████████████████████████████████████████████████████████████████████████████████████████████████| 282/282 [00:14<00:00, 19.93batch/s]
+Starting evalutation...
+Testing: 100%|████████████████████████████████████████████████████████████████████████████████████████████████████████| 282/282 [00:09<00:00, 30.89batch/s]
+Starting evalutation...
+Testing: 100%|██████████████████████████████████████████████████████████████████████████████████████████████████████████| 94/94 [00:03<00:00, 31.24batch/s]
+[2025-04-08 13:24:47,745][client_fl][INFO] - train_performance - {"fl_task_id": "mnist", "client_mac": "b0:7b:25:0e:e7:96", "client_name": "ccl-e-server", "round": 2, "gl_model_v": 1, "train_loss": 0.029964470742138247, "train_accuracy": 0.9911388888888889, "train_f1_score": 0.9911414815141109, "val_loss": 0.04402215491009361, "val_accuracy": 0.9865833333333334, "val_f1_score": 0.9865783421835627, "train_time": 26.360313653945923, "wandb_name": "ccl-e-server-v0(2025-04-08 13:21:38.657079)"}
+[92mINFO [0m:      Sent reply
+[2025-04-08 13:24:47,805][flwr][INFO] - Sent reply
+[92mINFO [0m:
+[2025-04-08 13:24:54,287][flwr][INFO] -
+[92mINFO [0m:      Received: evaluate message aaf99c71-0b76-4642-b3bc-2b84767623e8
+[2025-04-08 13:24:54,288][flwr][INFO] - Received: evaluate message aaf99c71-0b76-4642-b3bc-2b84767623e8
+Starting evalutation...
+Testing: 100%|██████████████████████████████████████████████████████████████████████████████████████████████████████████| 94/94 [00:03<00:00, 31.20batch/s]
+[2025-04-08 13:24:57,328][client_fl][INFO] - test - {"fl_task_id": "mnist", "client_mac": "b0:7b:25:0e:e7:96", "client_name": "ccl-e-server", "round": 2, "test_loss": 0.05111471745879092, "test_accuracy": 0.9845, "gl_model_v": 1, "wandb_name": "ccl-e-server-v0(2025-04-08 13:21:38.657079)"}
+[92mINFO [0m:      Sent reply
+[2025-04-08 13:24:57,343][flwr][INFO] - Sent reply
+[92mINFO [0m:
+[2025-04-08 13:24:57,365][flwr][INFO] -
+[92mINFO [0m:      Received: reconnect message 06a92a8c-5c7c-424b-8a24-36e93dbb4311
+[2025-04-08 13:24:57,366][flwr][INFO] - Received: reconnect message 06a92a8c-5c7c-424b-8a24-36e93dbb4311
+[2025-04-08 13:24:57,370][flwr][DEBUG] - gRPC channel closed
+[92mINFO [0m:      Disconnect and shut down
+[2025-04-08 13:24:57,371][flwr][INFO] - Disconnect and shut down
+[2025-04-08 13:24:57,373][root][INFO] - fl learning finished
