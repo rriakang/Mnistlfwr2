@@ -89,7 +89,7 @@ class FLServer():
             )
             
             strategy_config = {
-                "_target_": "server_cluster.GeneticCFLStrategy",  # 실제 클래스의 전체 경로를 사용해야 합니다.
+                "_target_": "server.server_cluster.GeneticCFLStrategy",  # 실제 클래스의 전체 경로를 사용해야 합니다.
                 "init_lr": self.learning_rate,
                 "init_bs": self.batch_size,
                 "epochs": self.local_epochs,

@@ -1,0 +1,33 @@
+random_seed: 42
+learning_rate: 0.001
+model_type: hyperparameter
+model:
+  _target_: models.MNISTClassifier
+  output_size: 10
+dataset:
+  name: MNIST
+  validation_split: 0.2
+task_id: mnist
+wandb:
+  use: true
+  key: 38f6cf3c2c37660d42ebfe8ab434b72d34be3b31
+  account: rirakang@gachon.ac.kr
+  project: ${dataset.name}_${task_id}
+num_epochs: 1
+batch_size: 128
+num_rounds: 2
+clients_per_round: 1
+server:
+  strategy:
+    _target_: flwr.server.strategy.FedAvg
+    fraction_fit: 1.0e-05
+    fraction_evaluate: 1.0e-06
+    min_fit_clients: ${clients_per_round}
+    min_available_clients: ${clients_per_round}
+    min_evaluate_clients: ${clients_per_round}
+    on_fit_config_fn:
+      _target_: fedops.server_config.get_on_fit_config
+      learning_rate: ${learning_rate}
+      batch_size: ${batch_size}
+      local_epochs: ${num_epochs}
+      num_rounds: ${num_rounds}
