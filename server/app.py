@@ -98,8 +98,7 @@ class FLServer():
             model_parameters = server_utils.load_initial_parameters_from_shape(json_path)
         elif self.model_type == "hyperparameter" :
             model_parameters = [val.cpu().numpy() for _, val in model.state_dict().items()]
-            
-            
+            logging.info('hyperparameter')
             
         if self.model_type == "hyperparameter" :
             strategy = instantiate(
