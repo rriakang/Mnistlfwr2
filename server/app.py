@@ -82,16 +82,19 @@ class FLServer():
 
         # 전략(Strategy) 인스턴스화
         if self.model_type == "hyperparameter":
+            # self.fit_config 대신, FLServer.get_on_fit_config를 호출하여 구체적인 함수를 생성합니다.
+            on_fit_config_fn = FLServer.get_on_fit_config(self.learning_rate, self.batch_size, self.local_epochs, self.num_rounds)
             strategy = instantiate(
                 GeneticCFLStrategy,
                 initial_parameters=fl.common.ndarrays_to_parameters(model_parameters),
                 evaluate_fn=self.get_eval_fn(model, model_name),
-                on_fit_config_fn=self.fit_config,
+                on_fit_config_fn=on_fit_config_fn,
                 on_evaluate_config_fn=self.evaluate_config,
                 init_lr=self.learning_rate,
                 init_bs=self.batch_size,
                 epochs=self.local_epochs
             )
+
         elif self.model_type in ["Tensorflow", "Pytorch", "Huggingface"]:
             strategy = instantiate(
                 self.strategy,
