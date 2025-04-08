@@ -125,7 +125,7 @@ class FLClient(fl.client.NumPyClient):
         batch_size: int = config["batch_size"]
         epochs: int = config["local_epochs"]
         num_rounds: int = config["num_rounds"]
-        lr : int = config["learning_rate"]
+        # lr : int = config["learning_rate"]
         
 
         if self.wandb_use:
