@@ -4,7 +4,7 @@ from torch import nn
 from torch import optim
 import torch.nn.functional as F
 from tqdm import tqdm 
-
+import numpy
 # Define MNIST Model    
 class MNISTClassifier(nn.Module):
     # To properly utilize the config file, the output_size variable must be used in __init__().

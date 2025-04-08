@@ -2,3 +2,5 @@
 fedops
 torchvision
 scikit-learn
+torch
+numpy
