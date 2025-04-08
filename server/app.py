@@ -81,19 +81,29 @@ class FLServer():
             logging.info('hyperparameter mode: model_parameters set')
 
         # 전략(Strategy) 인스턴스화
+         # model_parameters 할당 부분...
         if self.model_type == "hyperparameter":
-            # self.fit_config 대신, FLServer.get_on_fit_config를 호출하여 구체적인 함수를 생성합니다.
-            on_fit_config_fn = FLServer.get_on_fit_config(self.learning_rate, self.batch_size, self.local_epochs, self.num_rounds)
+            # 구체적인 on_fit_config_fn을 생성해서 전달합니다.
+            on_fit_config_fn = FLServer.get_on_fit_config(
+                self.learning_rate, self.batch_size, self.local_epochs, self.num_rounds
+            )
+            
+            strategy_config = {
+                "_target_": "server_cluster.GeneticCFLStrategy",  # 실제 클래스의 전체 경로를 사용해야 합니다.
+                "init_lr": self.learning_rate,
+                "init_bs": self.batch_size,
+                "epochs": self.local_epochs,
+            }
+            
             strategy = instantiate(
-                GeneticCFLStrategy,
+                strategy_config,
                 initial_parameters=fl.common.ndarrays_to_parameters(model_parameters),
                 evaluate_fn=self.get_eval_fn(model, model_name),
                 on_fit_config_fn=on_fit_config_fn,
-                on_evaluate_config_fn=self.evaluate_config,
-                init_lr=self.learning_rate,
-                init_bs=self.batch_size,
-                epochs=self.local_epochs
+                on_evaluate_config_fn=self.evaluate_config
             )
+
+
 
         elif self.model_type in ["Tensorflow", "Pytorch", "Huggingface"]:
             strategy = instantiate(
@@ -187,7 +197,6 @@ class FLServer():
 
     @staticmethod
     def get_on_fit_config(learning_rate: float, batch_size: int, local_epochs: int, num_rounds: int):
-        """구체적인 on_fit_config_fn 함수 반환 (Hydra _target_용)"""
         def fit_config_fn(server_round: int):
             return {
                 "learning_rate": learning_rate,
