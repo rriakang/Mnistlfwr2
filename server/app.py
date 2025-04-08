@@ -50,7 +50,8 @@ class FLServer():
         elif self.model_type == "Huggingface":
             pass
         elif self.model_type == "hyperparameter":
-            pass
+            self.gl_val_loader = gl_val_loader
+            self.test_torch = test_torch
 
     def init_gl_model_registration(self, model, gl_model_name) -> None:
         logging.info(f'last_gl_model_v: {self.server.last_gl_model_v}')
