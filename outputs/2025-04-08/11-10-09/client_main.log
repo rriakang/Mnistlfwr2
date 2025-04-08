@@ -1,0 +1,4 @@
+[2025-04-08 11:10:09,075][root][INFO] - FL_Task - {"dataset": "MNIST", "start_execution_time": "2025-04-08 11:10:09"}
+[2025-04-08 11:10:09,139][__main__][INFO] - data loaded
+[2025-04-08 11:10:09,165][root][INFO] - init model_type: hyperparameter
+[2025-04-08 11:11:18,083][root][INFO] - ccl-e-server;b0:7b:25:0e:e7:96-client close

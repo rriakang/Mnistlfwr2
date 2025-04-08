@@ -1,3 +1,4 @@
+#client_utils.py
 import asyncio
 import os
 import requests
@@ -95,6 +96,11 @@ def download_local_model(model_type, task_id, listdir, model=None):
         elif model_type == "Pytorch" and model_extension == "pth":
             import torch
             model.load_state_dict(torch.load(model_path))
+            
+        elif model_type == "hyperparameter" and model_extension == "pth":
+            import torch
+            model.load_state_dict(torch.load(model_path))
+
 
     else:
         print("No matching model files found.")

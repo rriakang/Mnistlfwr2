@@ -1,3 +1,5 @@
+#client_fl.py
+
 from collections import OrderedDict
 import json, logging
 import flwr as fl
@@ -66,6 +68,12 @@ class FLClient(fl.client.NumPyClient):
             self.finetune_llm = finetune_llm
             self.data_collator = data_collator
             self.formatting_prompts_func = formatting_prompts_func
+        elif self.model_type == "hyperparameter":
+            self.train_loader = train_loader
+            self.val_loader = val_loader
+            self.test_loader = test_loader
+            self.train_torch = train_torch
+            self.test_torch = test_torch
 
     def set_parameters(self, parameters):
         if self.model_type in ["Tensorflow"]:
@@ -80,6 +88,14 @@ class FLClient(fl.client.NumPyClient):
 
         elif self.model_type in ["Huggingface"]:
             client_utils.set_parameters_for_llm(self.model, parameters)
+        
+        elif self.model_type == "hyperparameter":
+            params = [torch.tensor(val) for val in parameters]
+            client_utils.set_params(self.model, params)
+
+            
+    
+            
     
     def get_parameters(self):
         """Get parameters of the local model."""
@@ -92,6 +108,9 @@ class FLClient(fl.client.NumPyClient):
         
         elif self.model_type == "Huggingface":
             return client_utils.get_parameters_for_llm(self.model)
+        
+        elif self.model_type == "hyperparameter" :
+            return [val.cpu().numpy() for val in client_utils.get_params(self.model)]
         
 
     def get_properties(self, config):
@@ -106,6 +125,8 @@ class FLClient(fl.client.NumPyClient):
         batch_size: int = config["batch_size"]
         epochs: int = config["local_epochs"]
         num_rounds: int = config["num_rounds"]
+        lr : int = config["learning_rate"]
+        
 
         if self.wandb_use:
             # add wandb config
@@ -198,6 +219,59 @@ class FLClient(fl.client.NumPyClient):
             self.model.save_pretrained(model_save_path)
             # 선택적으로 tokenizer도 함께 저장
             self.tokenizer.save_pretrained(model_save_path)
+            
+        elif self.model_type == "hyperparameter":
+            train_results_prefixed = {
+                    "train_loss": loss,
+                    "train_lr": self.lr,
+                    "train_batch_size": self.bs
+                }
+            # hyperparameter에서는 validation set을 사용하지 않으면 빈 dict으로 처리 가능
+            val_results_prefixed = {}
+            try:
+                logger.info(f"[Client {self.client_name}] train_subset size: {len(self.train_subset)}")
+
+                # 1) 모델 파라미터 세팅
+                self.set_parameters(parameters)
+
+                # 2) config에서 lr, bs, epochs 추출
+                self.lr = config.get("lr", lr)
+                self.bs = config.get("batch_size", batch_size)
+                epochs = config.get("local_epochs", epochs)
+
+                # 3) 로컬 학습 진행 (local_train은 미리 정의된 함수)
+                loss = client_utils.local_train(
+                    model=self.model,
+                    train_subset=self.train_subset,
+                    lr=self.lr,
+                    batch_size=self.bs,
+                    epochs=epochs,
+                    device=self.device
+                )
+
+                # 4) 업데이트된 파라미터 리턴
+                updated_params = self.get_parameters()
+                metrics = {
+                    "loss": float(loss),
+                    "lr": float(self.lr),
+                    "batch_size": int(self.bs)
+                }
+
+                num_examples_train = len(self.train_subset)
+
+                # 모델 저장 (선택적)
+                torch.save(self.model.state_dict(), f'./local_model/{self.fl_task_id}/{self.model_name}_local_model_V{self.gl_model}.pth')
+
+                results = {
+                    "train_loss": loss,
+                    "train_lr": self.lr,
+                    "train_batch_size": self.bs
+                }
+
+            except Exception as e:
+                logger.error(f"[Client {self.client_name}] Exception in fit: {e}")
+                raise e
+
         
         else:
             raise ValueError("Unsupported model_type")
@@ -274,6 +348,35 @@ class FLClient(fl.client.NumPyClient):
             test_accuracy = 0.0
             num_examples_test = 1
         
+        elif self.model_type == "hyperparameter":
+            self.set_parameters(parameters)
+            self.model.eval()
+
+            from torch.utils.data import DataLoader
+            import torch.nn as nn
+
+            loader = DataLoader(self.train_subset, batch_size=self.bs, shuffle=False)
+            criterion = nn.CrossEntropyLoss()
+            total_loss, correct, total = 0.0, 0, 0
+
+            with torch.no_grad():
+                for images, labels in loader:
+                    images, labels = images.to(self.device), labels.to(self.device)
+                    outputs = self.model(images)
+                    batch_loss = criterion(outputs, labels)
+                    total_loss += batch_loss.item() * labels.size(0)
+                    _, preds = torch.max(outputs, 1)
+                    correct += (preds == labels).sum().item()
+                    total += labels.size(0)
+
+            avg_loss = total_loss / total if total > 0 else 0.0
+            accuracy = correct / total if total > 0 else 0.0
+            num_examples_test = total
+
+            results = {
+                "test_loss": avg_loss,
+                "test_accuracy": accuracy
+            }
         else:
             raise ValueError("Unsupported model_type")
 

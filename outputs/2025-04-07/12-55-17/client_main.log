@@ -1,0 +1,4 @@
+[2025-04-07 12:55:17,815][root][INFO] - FL_Task - {"dataset": "MNIST", "start_execution_time": "2025-04-07 12:55:17"}
+[2025-04-07 12:55:17,875][__main__][INFO] - data loaded
+[2025-04-07 12:55:17,900][root][INFO] - init model_type: Pytorch
+[2025-04-07 12:55:17,937][root][INFO] - ccl-e-server;b0:7b:25:0e:e7:96-client close
