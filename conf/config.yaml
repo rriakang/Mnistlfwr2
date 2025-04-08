@@ -20,8 +20,8 @@ task_id: 'mnist' # Input your Task Name that you register in FedOps Website
 
 wandb: 
   use: true # Whether to use wandb
-  key: 'your wandb api key' # Input your wandb api key
-  account: 'your wandb account' # Input your wandb account
+  key: '38f6cf3c2c37660d42ebfe8ab434b72d34be3b31' # Input your wandb api key
+  account: 'rirakang@gachon.ac.kr' # Input your wandb account
   project: '${dataset.name}_${task_id}'
 
 
