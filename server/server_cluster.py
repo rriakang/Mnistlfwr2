@@ -166,18 +166,12 @@ class GeneticCFLStrategy(FedAvg):
 
     @staticmethod
     def get_on_fit_config(init_lr: float, init_bs: int, epochs: int, num_rounds: int):
-        """
-        app.py에서 GeneticCFLStrategy.get_on_fit_config(...)를 호출하려고 할 때 필요한 정적 메서드.
-        아래 fit_config_fn을 리턴해주면, Flower 서버에서 on_fit_config_fn=...에 넣어 쓸 수 있습니다.
-        """
         def fit_config_fn(server_round: int):
-            # 주고자 하는 하이퍼파라미터를 여기서 딕셔너리 형태로 리턴
-            # configure_fit와 동일하게 "lr", "bs", "epochs"로 보낼 수도 있고,
-            # 필요하다면 "learning_rate", "batch_size" 등으로 맞춰도 됨.
             return {
-                "lr": float(init_lr),
-                "bs": int(init_bs),
-                "epochs": epochs,
+                "learning_rate": float(init_lr),   # <--- 'lr' 대신 'learning_rate'
+                "batch_size": int(init_bs),        # <--- 'bs' 대신 'batch_size'
+                "local_epochs": epochs,            # <--- 'epochs' 대신 'local_epochs'
                 "num_rounds": num_rounds
             }
         return fit_config_fn
+
