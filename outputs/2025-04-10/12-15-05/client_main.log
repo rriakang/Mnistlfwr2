@@ -1,0 +1,5 @@
+[2025-04-10 12:15:05,365][root][INFO] - FL_Task - {"dataset": "MNIST", "start_execution_time": "2025-04-10 12:15:05"}
+[2025-04-10 12:15:05,428][__main__][INFO] - data loaded
+[2025-04-10 12:15:05,453][__main__][INFO] - Latest Local Model download
+[2025-04-10 12:15:05,453][root][INFO] - downloaded local_model_name: MNISTClassifier_local_model_V1.pth
+[2025-04-10 12:15:05,467][root][INFO] - init model_type: hyperparameter
