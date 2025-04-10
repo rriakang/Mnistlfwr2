@@ -1,0 +1,15 @@
+{"time":"2025-04-08T16:53:10.753948242+09:00","level":"INFO","msg":"stream: starting","core version":"0.19.9","symlink path":"/home/ccl/safer/FedOps/MNIST/wandb/run-20250408_165310-r3a8wh09/logs/debug-core.log"}
+{"time":"2025-04-08T16:53:11.095872454+09:00","level":"INFO","msg":"created new stream","id":"r3a8wh09"}
+{"time":"2025-04-08T16:53:11.09594105+09:00","level":"INFO","msg":"stream: started","id":"r3a8wh09"}
+{"time":"2025-04-08T16:53:11.096007182+09:00","level":"INFO","msg":"handler: started","stream_id":"r3a8wh09"}
+{"time":"2025-04-08T16:53:11.095971645+09:00","level":"INFO","msg":"writer: Do: started","stream_id":"r3a8wh09"}
+{"time":"2025-04-08T16:53:11.095977492+09:00","level":"INFO","msg":"sender: started","stream_id":"r3a8wh09"}
+{"time":"2025-04-08T16:53:11.372182149+09:00","level":"INFO","msg":"Starting system monitor"}
+{"time":"2025-04-08T17:06:17.799992741+09:00","level":"INFO","msg":"stream: closing","id":"r3a8wh09"}
+{"time":"2025-04-08T17:06:17.800118521+09:00","level":"INFO","msg":"Stopping system monitor"}
+{"time":"2025-04-08T17:06:17.800303824+09:00","level":"INFO","msg":"Stopped system monitor"}
+{"time":"2025-04-08T17:06:18.601045551+09:00","level":"INFO","msg":"fileTransfer: Close: file transfer manager closed"}
+{"time":"2025-04-08T17:06:18.867253343+09:00","level":"INFO","msg":"handler: closed","stream_id":"r3a8wh09"}
+{"time":"2025-04-08T17:06:18.867320512+09:00","level":"INFO","msg":"writer: Close: closed","stream_id":"r3a8wh09"}
+{"time":"2025-04-08T17:06:18.867335363+09:00","level":"INFO","msg":"sender: closed","stream_id":"r3a8wh09"}
+{"time":"2025-04-08T17:06:18.867487594+09:00","level":"INFO","msg":"stream: closed","id":"r3a8wh09"}
