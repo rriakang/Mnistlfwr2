@@ -85,7 +85,7 @@ class FLServer():
          # model_parameters 할당 부분...
         if self.model_type == "hyperparameter":
             # 구체적인 on_fit_config_fn을 생성해서 전달합니다.
-            on_fit_config_fn = FLServer.get_on_fit_config(
+            on_fit_config_fn = GeneticCFLStrategy.get_on_fit_config(
                 self.learning_rate, self.batch_size, self.local_epochs, self.num_rounds
             )
             
@@ -159,8 +159,8 @@ class FLServer():
                 loss, accuracy, metrics = self.test_torch(model, self.gl_val_loader, self.cfg)
                 torch.save(model.state_dict(), gl_model_path + '.pth')
                 hyperparam_info = {
-                    "lr": config.get("lr", self.learning_rate),
-                    "bs": config.get("bs", self.batch_size),
+                    "learning_rate": config.get("learning_rate", self.learning_rate),
+                    "batch_size": config.get("batch_size", self.batch_size),
                     "loss": loss,
                     "accuracy": accuracy,
                     "metrics": metrics,

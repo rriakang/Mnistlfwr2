@@ -4,3 +4,4 @@
 2025-04-10 14:02:16,129 INFO    MainThread:225321 [wandb_init.py:init():786] wandb.init called with sweep_config: {}
 config: {'learning_rate': 0, 'optimizer': '', 'dataset': '', 'model_architecture': '', 'batch_size': 0, 'epochs': 0, 'num_rounds': 0, '_wandb': {}}
 2025-04-10 14:02:16,129 INFO    MainThread:225321 [wandb_init.py:init():801] wandb.init() called while a run is active
+2025-04-10 14:06:41,591 INFO    MsgRouterThr:225321 [mailbox.py:close():129] [no run ID] Closing mailbox, abandoning 1 handles.

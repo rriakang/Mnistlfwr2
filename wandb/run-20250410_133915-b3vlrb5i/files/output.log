@@ -716,3 +716,9 @@ AttributeError: 'FLClientTask' object has no attribute 'train_loader'
 [32mINFO[0m:     127.0.0.1:39306 - "[1mGET /online HTTP/1.1[0m" [32m200 OK[0m
 [32mINFO[0m:     127.0.0.1:50154 - "[1mGET /online HTTP/1.1[0m" [32m200 OK[0m
 [32mINFO[0m:     127.0.0.1:35720 - "[1mGET /online HTTP/1.1[0m" [32m200 OK[0m
+[32mINFO[0m:     127.0.0.1:35734 - "[1mGET /online HTTP/1.1[0m" [32m200 OK[0m
+[32mINFO[0m:     Shutting down
+[32mINFO[0m:     Waiting for application shutdown.
+[32mINFO[0m:     Application shutdown complete.
+[32mINFO[0m:     Finished server process [[36m225321[0m]
+[2025-04-10 14:06:40,714][root][INFO] - ccl-e-server;b0:7b:25:0e:e7:96-client close

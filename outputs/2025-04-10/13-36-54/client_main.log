@@ -29,3 +29,4 @@
 [2025-04-10 14:02:16,123][root][INFO] - wandb_account: rirakang@gachon.ac.kr
 [2025-04-10 14:02:16,142][root][INFO] - notify_fail start
 [2025-04-10 14:02:16,160][root][ERROR] - trainFin
+[2025-04-10 14:06:40,714][root][INFO] - ccl-e-server;b0:7b:25:0e:e7:96-client close

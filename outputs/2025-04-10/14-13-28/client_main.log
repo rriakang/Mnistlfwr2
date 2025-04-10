@@ -1,0 +1,120 @@
+[2025-04-10 14:13:28,920][root][INFO] - FL_Task - {"dataset": "MNIST", "start_execution_time": "2025-04-10 14:13:28"}
+[2025-04-10 14:13:28,986][__main__][INFO] - data loaded
+[2025-04-10 14:13:29,012][__main__][INFO] - Latest Local Model download
+[2025-04-10 14:13:29,012][root][INFO] - downloaded local_model_name: MNISTClassifier_local_model_V1.pth
+[2025-04-10 14:13:29,026][root][INFO] - init model_type: hyperparameter
+[2025-04-10 14:13:37,843][root][INFO] - bulid model
+[2025-04-10 14:13:37,843][root][INFO] - FL start
+[2025-04-10 14:13:37,852][client_api][INFO] - FL_server_IP:port - ccl.gachon.ac.kr:40025
+[2025-04-10 14:13:37,853][root][INFO] - FL learning ready
+[2025-04-10 14:13:37,853][root][INFO] - fl_task_id: mnist
+[2025-04-10 14:13:37,854][root][INFO] - dataset: MNIST
+[2025-04-10 14:13:37,854][root][INFO] - output_size: 10
+[2025-04-10 14:13:37,854][root][INFO] - validation_split: 0.2
+[2025-04-10 14:13:37,854][root][INFO] - model_type: hyperparameter
+[2025-04-10 14:13:37,854][root][INFO] - wandb_key: 38f6cf3c2c37660d42ebfe8ab434b72d34be3b31
+[2025-04-10 14:13:37,854][root][INFO] - wandb_account: rirakang@gachon.ac.kr
+[2025-04-10 14:13:39,525][flwr][WARNING] - DEPRECATED FEATURE: flwr.client.start_numpy_client() is deprecated. 
+	Instead, use `flwr.client.start_client()` by ensuring you first call the `.to_client()` method as shown below: 
+	flwr.client.start_client(
+		server_address='<IP>:<PORT>',
+		client=FlowerClient().to_client(), # <-- where FlowerClient is of type flwr.client.NumPyClient object
+	)
+	Using `start_numpy_client()` is deprecated.
+
+            This is a deprecated feature. It will be removed
+            entirely in future versions of Flower.
+        
+[2025-04-10 14:13:39,526][flwr][WARNING] - DEPRECATED FEATURE: flwr.client.start_client() is deprecated.
+	Instead, use the `flower-supernode` CLI command to start a SuperNode as shown below:
+
+		$ flower-supernode --insecure --superlink='<IP>:<PORT>'
+
+	To view all available options, run:
+
+		$ flower-supernode --help
+
+	Using `start_client()` is deprecated.
+
+            This is a deprecated feature. It will be removed
+            entirely in future versions of Flower.
+        
+[2025-04-10 14:13:39,540][flwr][DEBUG] - Opened insecure gRPC connection (no certificates were passed)
+[2025-04-10 14:13:39,544][flwr][DEBUG] - ChannelConnectivity.IDLE
+[2025-04-10 14:13:39,546][flwr][DEBUG] - ChannelConnectivity.CONNECTING
+[2025-04-10 14:13:39,550][flwr][DEBUG] - ChannelConnectivity.READY
+[2025-04-10 14:14:21,067][flwr][DEBUG] - gRPC channel closed
+[2025-04-10 14:14:21,089][root][INFO] - notify_fail start
+[2025-04-10 14:14:21,111][root][ERROR] - trainFin
+[2025-04-10 14:16:04,592][root][INFO] - bulid model
+[2025-04-10 14:16:04,592][root][INFO] - FL start
+[2025-04-10 14:16:04,602][client_api][INFO] - FL_server_IP:port - ccl.gachon.ac.kr:40025
+[2025-04-10 14:16:04,603][root][INFO] - FL learning ready
+[2025-04-10 14:16:04,604][root][INFO] - fl_task_id: mnist
+[2025-04-10 14:16:04,604][root][INFO] - dataset: MNIST
+[2025-04-10 14:16:04,604][root][INFO] - output_size: 10
+[2025-04-10 14:16:04,604][root][INFO] - validation_split: 0.2
+[2025-04-10 14:16:04,605][root][INFO] - model_type: hyperparameter
+[2025-04-10 14:16:04,605][root][INFO] - wandb_key: 38f6cf3c2c37660d42ebfe8ab434b72d34be3b31
+[2025-04-10 14:16:04,605][root][INFO] - wandb_account: rirakang@gachon.ac.kr
+[2025-04-10 14:16:04,611][flwr][WARNING] - DEPRECATED FEATURE: flwr.client.start_numpy_client() is deprecated. 
+	Instead, use `flwr.client.start_client()` by ensuring you first call the `.to_client()` method as shown below: 
+	flwr.client.start_client(
+		server_address='<IP>:<PORT>',
+		client=FlowerClient().to_client(), # <-- where FlowerClient is of type flwr.client.NumPyClient object
+	)
+	Using `start_numpy_client()` is deprecated.
+
+            This is a deprecated feature. It will be removed
+            entirely in future versions of Flower.
+        
+[2025-04-10 14:16:04,612][flwr][WARNING] - DEPRECATED FEATURE: flwr.client.start_client() is deprecated.
+	Instead, use the `flower-supernode` CLI command to start a SuperNode as shown below:
+
+		$ flower-supernode --insecure --superlink='<IP>:<PORT>'
+
+	To view all available options, run:
+
+		$ flower-supernode --help
+
+	Using `start_client()` is deprecated.
+
+            This is a deprecated feature. It will be removed
+            entirely in future versions of Flower.
+        
+[2025-04-10 14:16:04,615][flwr][DEBUG] - Opened insecure gRPC connection (no certificates were passed)
+[2025-04-10 14:16:04,620][flwr][DEBUG] - ChannelConnectivity.IDLE
+[2025-04-10 14:16:04,621][flwr][DEBUG] - ChannelConnectivity.CONNECTING
+[2025-04-10 14:16:04,625][flwr][DEBUG] - ChannelConnectivity.READY
+[2025-04-10 14:16:08,679][flwr][INFO] - 
+[2025-04-10 14:16:08,679][flwr][INFO] - Received: train message 28eca880-3e60-416e-b648-87a265c38651
+[2025-04-10 14:16:08,688][flwr][ERROR] - Client raised an exception.
+Traceback (most recent call last):
+  File "/home/ccl/anaconda3/envs/fedops_hyp/lib/python3.11/site-packages/flwr/client/app.py", line 571, in start_client_internal
+    reply_message = client_app(message=message, context=context)
+                    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/ccl/anaconda3/envs/fedops_hyp/lib/python3.11/site-packages/flwr/client/client_app.py", line 144, in __call__
+    return self._call(message, context)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/ccl/anaconda3/envs/fedops_hyp/lib/python3.11/site-packages/flwr/client/client_app.py", line 128, in ffn
+    out_message = handle_legacy_message_from_msgtype(
+                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/ccl/anaconda3/envs/fedops_hyp/lib/python3.11/site-packages/flwr/client/message_handler/message_handler.py", line 128, in handle_legacy_message_from_msgtype
+    fit_res = maybe_call_fit(
+              ^^^^^^^^^^^^^^^
+  File "/home/ccl/anaconda3/envs/fedops_hyp/lib/python3.11/site-packages/flwr/client/client.py", line 224, in maybe_call_fit
+    return client.fit(fit_ins)
+           ^^^^^^^^^^^^^^^^^^^
+  File "/home/ccl/anaconda3/envs/fedops_hyp/lib/python3.11/site-packages/flwr/client/numpy_client.py", line 227, in _fit
+    results = self.numpy_client.fit(parameters, ins.config)  # type: ignore
+              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/ccl/safer/FedOps/MNIST/client_fl.py", line 125, in fit
+    batch_size: int = config["batch_size"]
+                      ~~~~~~^^^^^^^^^^^^^^
+  File "/home/ccl/anaconda3/envs/fedops_hyp/lib/python3.11/site-packages/flwr/common/record/typeddict.py", line 50, in __getitem__
+    return cast(dict[K, V], self.__dict__["_data"])[item]
+           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^
+KeyError: 'batch_size'
+[2025-04-10 14:16:08,882][flwr][DEBUG] - gRPC channel closed
+[2025-04-10 14:16:08,907][root][INFO] - notify_fail start
+[2025-04-10 14:16:08,925][root][ERROR] - trainFin
