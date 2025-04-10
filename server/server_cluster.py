@@ -1,3 +1,5 @@
+#server_cluster.py
+
 import flwr as fl
 from flwr.server.strategy import FedAvg
 import numpy as np
@@ -27,7 +29,7 @@ def genetic_evolve_2d(vec_list, loss_list, top_k=2, mutation_prob=0.3):
     # 2) 나머지 개체 수만큼 parent 중 임의로 2개씩 뽑아 평균
     #    mutation_prob에 따라 돌연변이
     while len(new_population) < len(vec_arr):
-        p1, p2 = random.choices(parents, k=2)  # 부모 2명 샘플
+        p1, p2 = random.choices(parents, k=1)  # 부모 2명 샘플
         child = (p1 + p2) / 2.0               # 평균으로 crossover
         # 돌연변이
         if random.random() < mutation_prob:
