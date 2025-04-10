@@ -1,0 +1,15 @@
+{"time":"2025-04-10T13:28:46.286250338+09:00","level":"INFO","msg":"stream: starting","core version":"0.19.9","symlink path":"/home/ccl/safer/FedOps/MNIST/wandb/run-20250410_132846-acrpdcra/logs/debug-core.log"}
+{"time":"2025-04-10T13:28:46.722015265+09:00","level":"INFO","msg":"created new stream","id":"acrpdcra"}
+{"time":"2025-04-10T13:28:46.722090546+09:00","level":"INFO","msg":"stream: started","id":"acrpdcra"}
+{"time":"2025-04-10T13:28:46.722120737+09:00","level":"INFO","msg":"writer: Do: started","stream_id":"acrpdcra"}
+{"time":"2025-04-10T13:28:46.722147079+09:00","level":"INFO","msg":"handler: started","stream_id":"acrpdcra"}
+{"time":"2025-04-10T13:28:46.722175878+09:00","level":"INFO","msg":"sender: started","stream_id":"acrpdcra"}
+{"time":"2025-04-10T13:28:47.09204218+09:00","level":"INFO","msg":"Starting system monitor"}
+{"time":"2025-04-10T13:36:36.494528202+09:00","level":"INFO","msg":"stream: closing","id":"acrpdcra"}
+{"time":"2025-04-10T13:36:36.494574431+09:00","level":"INFO","msg":"Stopping system monitor"}
+{"time":"2025-04-10T13:36:36.49470499+09:00","level":"INFO","msg":"Stopped system monitor"}
+{"time":"2025-04-10T13:36:37.309082834+09:00","level":"INFO","msg":"fileTransfer: Close: file transfer manager closed"}
+{"time":"2025-04-10T13:36:37.683633562+09:00","level":"INFO","msg":"handler: closed","stream_id":"acrpdcra"}
+{"time":"2025-04-10T13:36:37.683717585+09:00","level":"INFO","msg":"sender: closed","stream_id":"acrpdcra"}
+{"time":"2025-04-10T13:36:37.683716733+09:00","level":"INFO","msg":"writer: Close: closed","stream_id":"acrpdcra"}
+{"time":"2025-04-10T13:36:37.683873036+09:00","level":"INFO","msg":"stream: closed","id":"acrpdcra"}

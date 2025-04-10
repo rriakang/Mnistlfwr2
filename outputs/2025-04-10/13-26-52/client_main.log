@@ -1,0 +1,18 @@
+[2025-04-10 13:26:52,667][root][INFO] - FL_Task - {"dataset": "MNIST", "start_execution_time": "2025-04-10 13:26:52"}
+[2025-04-10 13:26:52,731][__main__][INFO] - data loaded
+[2025-04-10 13:26:52,756][__main__][INFO] - Latest Local Model download
+[2025-04-10 13:26:52,757][root][INFO] - downloaded local_model_name: MNISTClassifier_local_model_V1.pth
+[2025-04-10 13:26:52,770][root][INFO] - init model_type: hyperparameter
+[2025-04-10 13:28:45,477][root][INFO] - bulid model
+[2025-04-10 13:28:45,477][root][INFO] - FL start
+[2025-04-10 13:28:45,485][client_api][INFO] - FL_server_IP:port - ccl.gachon.ac.kr:40025
+[2025-04-10 13:28:45,487][root][INFO] - FL learning ready
+[2025-04-10 13:28:45,487][root][INFO] - fl_task_id: mnist
+[2025-04-10 13:28:45,487][root][INFO] - dataset: MNIST
+[2025-04-10 13:28:45,487][root][INFO] - output_size: 10
+[2025-04-10 13:28:45,487][root][INFO] - validation_split: 0.2
+[2025-04-10 13:28:45,487][root][INFO] - model_type: hyperparameter
+[2025-04-10 13:28:45,487][root][INFO] - wandb_key: 38f6cf3c2c37660d42ebfe8ab434b72d34be3b31
+[2025-04-10 13:28:45,487][root][INFO] - wandb_account: rirakang@gachon.ac.kr
+[2025-04-10 13:28:47,213][root][INFO] - notify_fail start
+[2025-04-10 13:28:47,242][root][ERROR] - trainFin
