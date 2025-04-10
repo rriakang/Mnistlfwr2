@@ -349,34 +349,65 @@ class FLClient(fl.client.NumPyClient):
             num_examples_test = 1
         
         elif self.model_type == "hyperparameter":
-            self.set_parameters(parameters)
-            self.model.eval()
+            try:
+                # 디바이스 설정 (GPU 사용 가능 시 GPU로)
+                import torch
+                device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
+                self.device = device
+                
+                # self.train_loader.dataset의 크기를 확인
+                logger.info(f"[Client {self.client_name}] train_loader size: {len(self.train_loader.dataset)}")
 
-            from torch.utils.data import DataLoader
-            import torch.nn as nn
+                # 1) 전달받은 파라미터를 local model에 세팅
+                self.set_parameters(parameters)
 
-            loader = DataLoader(self.train_subset, batch_size=self.bs, shuffle=False)
-            criterion = nn.CrossEntropyLoss()
-            total_loss, correct, total = 0.0, 0, 0
+                # 2) config에서 lr, batch_size, local_epochs 등을 추출
+                #    (필요하다면 기본값을 cfg에서 가져와도 됨)
+                self.lr = config.get("learning_rate", 0.001)
+                self.bs = config.get("batch_size", 32)
+                local_epochs = config.get("local_epochs", 1)
 
-            with torch.no_grad():
-                for images, labels in loader:
-                    images, labels = images.to(self.device), labels.to(self.device)
-                    outputs = self.model(images)
-                    batch_loss = criterion(outputs, labels)
-                    total_loss += batch_loss.item() * labels.size(0)
-                    _, preds = torch.max(outputs, 1)
-                    correct += (preds == labels).sum().item()
-                    total += labels.size(0)
+                # 3) 로컬 학습 진행
+                #    기존에는 self.train_subset을 썼지만, 아래처럼 train_loader.dataset 사용
+                loss = client_utils.local_train(
+                    model=self.model,
+                    train_subset=self.train_loader.dataset,
+                    lr=self.lr,
+                    batch_size=self.bs,
+                    epochs=local_epochs,
+                    device=self.device
+                )
 
-            avg_loss = total_loss / total if total > 0 else 0.0
-            accuracy = correct / total if total > 0 else 0.0
-            num_examples_test = total
+                # 4) 학습 후 모델 파라미터(NumPy 배열)를 다시 가져옴
+                parameters_prime = self.get_parameters()
 
-            results = {
-                "test_loss": avg_loss,
-                "test_accuracy": accuracy
-            }
+                # 학습에 사용된 데이터 개수 (Dataset 크기로 설정)
+                num_examples_train = len(self.train_loader.dataset)
+
+                # (선택) 로컬 모델 저장
+                import os
+                import torch
+                local_model_path = f"./local_model/{self.fl_task_id}/{self.model_name}_local_model_V{self.gl_model}.pth"
+                os.makedirs(os.path.dirname(local_model_path), exist_ok=True)
+                torch.save(self.model.state_dict(), local_model_path)
+
+                # fit 함수에서 반환될 metrics 구성
+                # (여기에 train_accuracy나 다른 지표를 넣어도 됨)
+                metrics = {
+                    "loss": float(loss),
+                    "lr": float(self.lr),
+                    "batch_size": int(self.bs)
+                }
+
+                # fit 함수 최종 반환 (parameters_prime, num_examples, dict형 metrics)
+                return parameters_prime, num_examples_train, metrics
+
+            except Exception as e:
+                # 예외 발생 시 로그 출력 (f-string으로 변경)
+                logger.error(f"[Client {self.client_name}] Exception in fit: {e}")
+                # 필요 시 예외 재발생 (raise)
+                raise e
+
         else:
             raise ValueError("Unsupported model_type")
 

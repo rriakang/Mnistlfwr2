@@ -1,0 +1,7 @@
+{"time":"2025-04-11T01:10:51.200036885+09:00","level":"INFO","msg":"stream: starting","core version":"0.19.9","symlink path":"/home/ccl/safer/FedOps/MNIST/wandb/run-20250411_011051-yg1u8oxm/logs/debug-core.log"}
+{"time":"2025-04-11T01:10:54.496809168+09:00","level":"INFO","msg":"created new stream","id":"yg1u8oxm"}
+{"time":"2025-04-11T01:10:54.496919888+09:00","level":"INFO","msg":"stream: started","id":"yg1u8oxm"}
+{"time":"2025-04-11T01:10:54.496977906+09:00","level":"INFO","msg":"handler: started","stream_id":"yg1u8oxm"}
+{"time":"2025-04-11T01:10:54.496975691+09:00","level":"INFO","msg":"sender: started","stream_id":"yg1u8oxm"}
+{"time":"2025-04-11T01:10:54.497049717+09:00","level":"INFO","msg":"writer: Do: started","stream_id":"yg1u8oxm"}
+{"time":"2025-04-11T01:10:54.846152431+09:00","level":"INFO","msg":"Starting system monitor"}

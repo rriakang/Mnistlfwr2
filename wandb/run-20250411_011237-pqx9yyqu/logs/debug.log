@@ -1,0 +1,6 @@
+2025-04-11 01:12:37,533 INFO    MainThread:976339 [wandb_init.py:setup_run_log_directory():662] Logging user logs to /home/ccl/safer/FedOps/MNIST/wandb/run-20250411_011237-pqx9yyqu/logs/debug.log
+2025-04-11 01:12:37,534 INFO    MainThread:976339 [wandb_init.py:setup_run_log_directory():663] Logging internal logs to /home/ccl/safer/FedOps/MNIST/wandb/run-20250411_011237-pqx9yyqu/logs/debug-internal.log
+2025-04-11 01:12:37,534 INFO    MainThread:976339 [wandb_init.py:init():781] calling init triggers
+2025-04-11 01:12:37,534 INFO    MainThread:976339 [wandb_init.py:init():786] wandb.init called with sweep_config: {}
+config: {'learning_rate': 0, 'optimizer': '', 'dataset': '', 'model_architecture': '', 'batch_size': 0, 'epochs': 0, 'num_rounds': 0, '_wandb': {}}
+2025-04-11 01:12:37,534 INFO    MainThread:976339 [wandb_init.py:init():801] wandb.init() called while a run is active
