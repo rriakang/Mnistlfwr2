@@ -3,3 +3,4 @@
 [2025-04-10 14:44:41,268][__main__][INFO] - Latest Local Model download
 [2025-04-10 14:44:41,268][root][INFO] - downloaded local_model_name: MNISTClassifier_local_model_V1.pth
 [2025-04-10 14:44:41,282][root][INFO] - init model_type: hyperparameter
+[2025-04-10 14:47:54,190][root][INFO] - ccl-e-server;b0:7b:25:0e:e7:96-client close

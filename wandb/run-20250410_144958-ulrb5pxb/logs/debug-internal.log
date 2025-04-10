@@ -1,0 +1,7 @@
+{"time":"2025-04-10T14:49:58.935118834+09:00","level":"INFO","msg":"stream: starting","core version":"0.19.9","symlink path":"/home/ccl/safer/FedOps/MNIST/wandb/run-20250410_144958-ulrb5pxb/logs/debug-core.log"}
+{"time":"2025-04-10T14:49:59.360433946+09:00","level":"INFO","msg":"created new stream","id":"ulrb5pxb"}
+{"time":"2025-04-10T14:49:59.360551108+09:00","level":"INFO","msg":"stream: started","id":"ulrb5pxb"}
+{"time":"2025-04-10T14:49:59.360609012+09:00","level":"INFO","msg":"writer: Do: started","stream_id":"ulrb5pxb"}
+{"time":"2025-04-10T14:49:59.360685365+09:00","level":"INFO","msg":"handler: started","stream_id":"ulrb5pxb"}
+{"time":"2025-04-10T14:49:59.360681716+09:00","level":"INFO","msg":"sender: started","stream_id":"ulrb5pxb"}
+{"time":"2025-04-10T14:49:59.791143535+09:00","level":"INFO","msg":"Starting system monitor"}
