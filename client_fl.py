@@ -288,9 +288,9 @@ class FLClient(fl.client.NumPyClient):
 
                 # train/val results
                 train_results_prefixed = {
-                    "train_loss": loss,
-                    "train_lr": lr,
-                    "train_batch_size": batch_size
+                    "loss": loss,
+                    "lr": lr,
+                    "bs": batch_size
                 }
                 val_results_prefixed = {}
 
