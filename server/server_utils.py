@@ -130,6 +130,11 @@ def model_download_local(model_type, model=None):
                 import torch
                 logging.info(f"loaded model parameters")
                 model.load_state_dict(torch.load(latest_gl_model_file))
+            
+            elif model_type == "hyperparameter":
+                import torch
+                logging.info(f"loaded model parameters")
+                model.load_state_dict(torch.load(latest_gl_model_file))
                 
             else:
                 print("No matching model files found.")
