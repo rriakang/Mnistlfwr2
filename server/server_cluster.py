@@ -1,5 +1,3 @@
-#server_cluster.py
-
 import flwr as fl
 from flwr.server.strategy import FedAvg
 import numpy as np
@@ -29,7 +27,7 @@ def genetic_evolve_2d(vec_list, loss_list, top_k=2, mutation_prob=0.3):
     # 2) 나머지 개체 수만큼 parent 중 임의로 2개씩 뽑아 평균
     #    mutation_prob에 따라 돌연변이
     while len(new_population) < len(vec_arr):
-        p1, p2 = random.choices(parents, k=1)  # 부모 2명 샘플
+        p1, p2 = random.choices(parents, k=2)  # 부모 2명 샘플
         child = (p1 + p2) / 2.0               # 평균으로 crossover
         # 돌연변이
         if random.random() < mutation_prob:
@@ -52,6 +50,8 @@ def weighted_average(metrics):
 
 class GeneticCFLStrategy(FedAvg):
     def __init__(self, init_lr=1e-3, init_bs=32, epochs=5, **kwargs):
+        # 수정: FedAvg의 fraction_fit, min_fit_clients 등 키워드를 kwargs로 받아
+        #      evaluate_metrics_aggregation_fn=weighted_average와 함께 super().__init__ 호출
         super().__init__(
             evaluate_metrics_aggregation_fn=weighted_average,
             **kwargs
@@ -118,6 +118,8 @@ class GeneticCFLStrategy(FedAvg):
                 continue
 
             cid_int = self._get_int_index(cid_str)
+
+            # 서버에서는 metrics["lr"], metrics["bs"], metrics["loss"] 키를 요구
             lr_val = metrics["lr"]
             bs_val = metrics["bs"]
             loss_val = metrics["loss"]
@@ -133,36 +135,26 @@ class GeneticCFLStrategy(FedAvg):
             X = np.column_stack((lr_list, bs_list))
             X_scaled = StandardScaler().fit_transform(X)
 
-            dbscan = DBSCAN(eps=0.1, min_samples=2)  # eps 등 파라미터 조정 가능
+            dbscan = DBSCAN(eps=0.1, min_samples=2)
             labels = dbscan.fit_predict(X_scaled)
 
             num_clusters = len(set(labels)) - (1 if -1 in labels else 0)
             print(f"[Round {server_round}] DBSCAN clusters: {num_clusters}")
 
-            # 각 클러스터별로 GA 적용
             unique_labels = set(labels)
             for label in unique_labels:
                 if label == -1:
-                    # outlier는 그대로 두거나, default로 세팅해도 됨
                     continue
 
-                # 해당 클러스터에 속한 클라이언트 인덱스 추출
                 cluster_indices = [i for i, lab in enumerate(labels) if lab == label]
-
-                # vec_list = [(lr_log, bs_log)], loss_list
                 cluster_vecs = [[lr_list[i], bs_list[i]] for i in cluster_indices]
                 cluster_losses = [loss_list[i] for i in cluster_indices]
 
-                # GA로 2D 진화
                 new_vecs = genetic_evolve_2d(cluster_vecs, cluster_losses, top_k=2, mutation_prob=0.3)
 
-                # 업데이트된 (lr_log, bs_log) 클라이언트별로 저장
                 for idx, new_vec in zip(cluster_indices, new_vecs):
                     c_int = cid_list[idx]
                     self.client_hparams[c_int] = (new_vec[0], new_vec[1])
-        else:
-            # 클라이언트가 없는 경우
-            pass
 
         return aggregated_parameters
 
@@ -170,10 +162,9 @@ class GeneticCFLStrategy(FedAvg):
     def get_on_fit_config(init_lr: float, init_bs: int, epochs: int, num_rounds: int):
         def fit_config_fn(server_round: int):
             return {
-                "learning_rate": float(init_lr),   # <--- 'lr' 대신 'learning_rate'
-                "batch_size": int(init_bs),        # <--- 'bs' 대신 'batch_size'
-                "local_epochs": epochs,            # <--- 'epochs' 대신 'local_epochs'
+                "learning_rate": float(init_lr),
+                "batch_size": int(init_bs),
+                "local_epochs": epochs,
                 "num_rounds": num_rounds
             }
         return fit_config_fn
-

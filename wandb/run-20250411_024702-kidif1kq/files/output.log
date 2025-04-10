@@ -9,7 +9,7 @@
             This is a deprecated feature. It will be removed
             entirely in future versions of Flower.
 
-[2025-04-11 02:40:10,661][flwr][WARNING] - DEPRECATED FEATURE: flwr.client.start_numpy_client() is deprecated.
+[2025-04-11 02:47:03,223][flwr][WARNING] - DEPRECATED FEATURE: flwr.client.start_numpy_client() is deprecated.
 	Instead, use `flwr.client.start_client()` by ensuring you first call the `.to_client()` method as shown below:
 	flwr.client.start_client(
 		server_address='<IP>:<PORT>',
@@ -34,7 +34,7 @@
             This is a deprecated feature. It will be removed
             entirely in future versions of Flower.
 
-[2025-04-11 02:40:10,663][flwr][WARNING] - DEPRECATED FEATURE: flwr.client.start_client() is deprecated.
+[2025-04-11 02:47:03,224][flwr][WARNING] - DEPRECATED FEATURE: flwr.client.start_client() is deprecated.
 	Instead, use the `flower-supernode` CLI command to start a SuperNode as shown below:
 
 		$ flower-supernode --insecure --superlink='<IP>:<PORT>'
@@ -48,18 +48,18 @@
             This is a deprecated feature. It will be removed
             entirely in future versions of Flower.
 
-[2025-04-11 02:40:10,672][flwr][DEBUG] - Opened insecure gRPC connection (no certificates were passed)
-[2025-04-11 02:40:10,674][flwr][DEBUG] - ChannelConnectivity.IDLE
-[2025-04-11 02:40:10,675][flwr][DEBUG] - ChannelConnectivity.CONNECTING
-[2025-04-11 02:40:10,680][flwr][DEBUG] - ChannelConnectivity.TRANSIENT_FAILURE
-[2025-04-11 02:40:10,883][flwr][DEBUG] - gRPC channel closed
-[2025-04-11 02:40:10,883][root][INFO] - [E][PC0002] learning <_MultiThreadedRendezvous of RPC that terminated with:
+[2025-04-11 02:47:03,238][flwr][DEBUG] - Opened insecure gRPC connection (no certificates were passed)
+[2025-04-11 02:47:03,241][flwr][DEBUG] - ChannelConnectivity.IDLE
+[2025-04-11 02:47:03,242][flwr][DEBUG] - ChannelConnectivity.CONNECTING
+[2025-04-11 02:47:03,246][flwr][DEBUG] - ChannelConnectivity.TRANSIENT_FAILURE
+[2025-04-11 02:47:03,449][flwr][DEBUG] - gRPC channel closed
+[2025-04-11 02:47:03,449][root][INFO] - [E][PC0002] learning <_MultiThreadedRendezvous of RPC that terminated with:
 	status = StatusCode.UNAVAILABLE
 	details = "failed to connect to all addresses; last error: UNAVAILABLE: ipv4:192.9.201.228:40025: Socket closed"
-	debug_error_string = "UNKNOWN:Error received from peer  {created_time:"2025-04-11T02:40:10.679720964+09:00", grpc_status:14, grpc_message:"failed to connect to all addresses; last error: UNAVAILABLE: ipv4:192.9.201.228:40025: Socket closed"}"
+	debug_error_string = "UNKNOWN:Error received from peer  {created_time:"2025-04-11T02:47:03.246842464+09:00", grpc_status:14, grpc_message:"failed to connect to all addresses; last error: UNAVAILABLE: ipv4:192.9.201.228:40025: Socket closed"}"
 >
-[2025-04-11 02:40:10,884][root][INFO] - notify_fail start
-[2025-04-11 02:40:10,906][root][ERROR] - trainFin
+[2025-04-11 02:47:03,450][root][INFO] - notify_fail start
+[2025-04-11 02:47:03,473][root][ERROR] - trainFin
 [31mERROR[0m:    Exception in ASGI application
 Traceback (most recent call last):
   File "/home/ccl/anaconda3/envs/fedops_hyp/lib/python3.11/site-packages/uvicorn/protocols/http/httptools_impl.py", line 409, in run_asgi
@@ -127,30 +127,34 @@ Traceback (most recent call last):
 grpc._channel._MultiThreadedRendezvous: <_MultiThreadedRendezvous of RPC that terminated with:
 	status = StatusCode.UNAVAILABLE
 	details = "failed to connect to all addresses; last error: UNAVAILABLE: ipv4:192.9.201.228:40025: Socket closed"
-	debug_error_string = "UNKNOWN:Error received from peer  {created_time:"2025-04-11T02:40:10.679720964+09:00", grpc_status:14, grpc_message:"failed to connect to all addresses; last error: UNAVAILABLE: ipv4:192.9.201.228:40025: Socket closed"}"
+	debug_error_string = "UNKNOWN:Error received from peer  {created_time:"2025-04-11T02:47:03.246842464+09:00", grpc_status:14, grpc_message:"failed to connect to all addresses; last error: UNAVAILABLE: ipv4:192.9.201.228:40025: Socket closed"}"
 >
-[32mINFO[0m:     127.0.0.1:57680 - "[1mGET /online HTTP/1.1[0m" [32m200 OK[0m
-[32mINFO[0m:     127.0.0.1:49320 - "[1mGET /online HTTP/1.1[0m" [32m200 OK[0m
-[32mINFO[0m:     127.0.0.1:49322 - "[1mGET /online HTTP/1.1[0m" [32m200 OK[0m
-[32mINFO[0m:     127.0.0.1:45350 - "[1mGET /online HTTP/1.1[0m" [32m200 OK[0m
-[32mINFO[0m:     127.0.0.1:54576 - "[1mGET /online HTTP/1.1[0m" [32m200 OK[0m
-[32mINFO[0m:     127.0.0.1:54580 - "[1mGET /online HTTP/1.1[0m" [32m200 OK[0m
-[32mINFO[0m:     127.0.0.1:33392 - "[1mGET /online HTTP/1.1[0m" [32m200 OK[0m
-[32mINFO[0m:     127.0.0.1:59134 - "[1mGET /online HTTP/1.1[0m" [32m200 OK[0m
-[2025-04-11 02:41:02,206][root][INFO] - bulid model
-[2025-04-11 02:41:02,207][root][INFO] - FL start
+[32mINFO[0m:     127.0.0.1:46856 - "[1mGET /online HTTP/1.1[0m" [32m200 OK[0m
+[32mINFO[0m:     127.0.0.1:60844 - "[1mGET /online HTTP/1.1[0m" [32m200 OK[0m
+[32mINFO[0m:     127.0.0.1:43994 - "[1mGET /online HTTP/1.1[0m" [32m200 OK[0m
+[32mINFO[0m:     127.0.0.1:43996 - "[1mGET /online HTTP/1.1[0m" [32m200 OK[0m
+[32mINFO[0m:     127.0.0.1:35806 - "[1mGET /online HTTP/1.1[0m" [32m200 OK[0m
+[32mINFO[0m:     127.0.0.1:48024 - "[1mGET /online HTTP/1.1[0m" [32m200 OK[0m
+[32mINFO[0m:     127.0.0.1:48030 - "[1mGET /online HTTP/1.1[0m" [32m200 OK[0m
+[32mINFO[0m:     127.0.0.1:49428 - "[1mGET /online HTTP/1.1[0m" [32m200 OK[0m
+[32mINFO[0m:     127.0.0.1:47502 - "[1mGET /online HTTP/1.1[0m" [32m200 OK[0m
+[32mINFO[0m:     127.0.0.1:47508 - "[1mGET /online HTTP/1.1[0m" [32m200 OK[0m
+[32mINFO[0m:     127.0.0.1:48192 - "[1mGET /online HTTP/1.1[0m" [32m200 OK[0m
+[32mINFO[0m:     127.0.0.1:59430 - "[1mGET /online HTTP/1.1[0m" [32m200 OK[0m
+[2025-04-11 02:48:20,267][root][INFO] - bulid model
+[2025-04-11 02:48:20,267][root][INFO] - FL start
 Response: {"task_id":"mnist","port":40025}
 Response JSON: {'task_id': 'mnist', 'port': 40025}
-[2025-04-11 02:41:02,216][client_api][INFO] - FL_server_IP:port - ccl.gachon.ac.kr:40025
-[32mINFO[0m:     127.0.0.1:59150 - "[1mPOST /start HTTP/1.1[0m" [32m200 OK[0m
-[2025-04-11 02:41:02,217][root][INFO] - FL learning ready
-[2025-04-11 02:41:02,217][root][INFO] - fl_task_id: mnist
-[2025-04-11 02:41:02,218][root][INFO] - dataset: MNIST
-[2025-04-11 02:41:02,218][root][INFO] - output_size: 10
-[2025-04-11 02:41:02,218][root][INFO] - validation_split: 0.2
-[2025-04-11 02:41:02,218][root][INFO] - model_type: hyperparameter
-[2025-04-11 02:41:02,219][root][INFO] - wandb_key: 38f6cf3c2c37660d42ebfe8ab434b72d34be3b31
-[2025-04-11 02:41:02,219][root][INFO] - wandb_account: rirakang@gachon.ac.kr
+[2025-04-11 02:48:20,276][client_api][INFO] - FL_server_IP:port - ccl.gachon.ac.kr:40025
+[32mINFO[0m:     127.0.0.1:59434 - "[1mPOST /start HTTP/1.1[0m" [32m200 OK[0m
+[2025-04-11 02:48:20,278][root][INFO] - FL learning ready
+[2025-04-11 02:48:20,278][root][INFO] - fl_task_id: mnist
+[2025-04-11 02:48:20,278][root][INFO] - dataset: MNIST
+[2025-04-11 02:48:20,279][root][INFO] - output_size: 10
+[2025-04-11 02:48:20,279][root][INFO] - validation_split: 0.2
+[2025-04-11 02:48:20,279][root][INFO] - model_type: hyperparameter
+[2025-04-11 02:48:20,279][root][INFO] - wandb_key: 38f6cf3c2c37660d42ebfe8ab434b72d34be3b31
+[2025-04-11 02:48:20,280][root][INFO] - wandb_account: rirakang@gachon.ac.kr
 [34m[1mwandb[0m: [33mWARNING[0m Calling wandb.login() after wandb.init() has no effect.
 [93mWARNING [0m:   DEPRECATED FEATURE: flwr.client.start_numpy_client() is deprecated.
 	Instead, use `flwr.client.start_client()` by ensuring you first call the `.to_client()` method as shown below:
@@ -163,7 +167,7 @@ Response JSON: {'task_id': 'mnist', 'port': 40025}
             This is a deprecated feature. It will be removed
             entirely in future versions of Flower.
 
-[2025-04-11 02:41:02,224][flwr][WARNING] - DEPRECATED FEATURE: flwr.client.start_numpy_client() is deprecated.
+[2025-04-11 02:48:20,285][flwr][WARNING] - DEPRECATED FEATURE: flwr.client.start_numpy_client() is deprecated.
 	Instead, use `flwr.client.start_client()` by ensuring you first call the `.to_client()` method as shown below:
 	flwr.client.start_client(
 		server_address='<IP>:<PORT>',
@@ -188,7 +192,7 @@ Response JSON: {'task_id': 'mnist', 'port': 40025}
             This is a deprecated feature. It will be removed
             entirely in future versions of Flower.
 
-[2025-04-11 02:41:02,225][flwr][WARNING] - DEPRECATED FEATURE: flwr.client.start_client() is deprecated.
+[2025-04-11 02:48:20,286][flwr][WARNING] - DEPRECATED FEATURE: flwr.client.start_client() is deprecated.
 	Instead, use the `flower-supernode` CLI command to start a SuperNode as shown below:
 
 		$ flower-supernode --insecure --superlink='<IP>:<PORT>'
@@ -202,13 +206,56 @@ Response JSON: {'task_id': 'mnist', 'port': 40025}
             This is a deprecated feature. It will be removed
             entirely in future versions of Flower.
 
-[2025-04-11 02:41:02,227][flwr][DEBUG] - Opened insecure gRPC connection (no certificates were passed)
-[2025-04-11 02:41:02,232][flwr][DEBUG] - ChannelConnectivity.IDLE
-[2025-04-11 02:41:02,233][flwr][DEBUG] - ChannelConnectivity.CONNECTING
-[2025-04-11 02:41:02,236][flwr][DEBUG] - ChannelConnectivity.READY
+[2025-04-11 02:48:20,288][flwr][DEBUG] - Opened insecure gRPC connection (no certificates were passed)
+[2025-04-11 02:48:20,293][flwr][DEBUG] - ChannelConnectivity.IDLE
+[2025-04-11 02:48:20,294][flwr][DEBUG] - ChannelConnectivity.CONNECTING
+[2025-04-11 02:48:20,299][flwr][DEBUG] - ChannelConnectivity.READY
+[32mINFO[0m:     127.0.0.1:52478 - "[1mGET /online HTTP/1.1[0m" [32m200 OK[0m
+[32mINFO[0m:     127.0.0.1:38494 - "[1mGET /online HTTP/1.1[0m" [32m200 OK[0m
+[32mINFO[0m:     127.0.0.1:53248 - "[1mGET /online HTTP/1.1[0m" [32m200 OK[0m
+[32mINFO[0m:     127.0.0.1:40288 - "[1mGET /online HTTP/1.1[0m" [32m200 OK[0m
+[32mINFO[0m:     127.0.0.1:42808 - "[1mGET /online HTTP/1.1[0m" [32m200 OK[0m
+[32mINFO[0m:     127.0.0.1:56224 - "[1mGET /online HTTP/1.1[0m" [32m200 OK[0m
+[32mINFO[0m:     127.0.0.1:47848 - "[1mGET /online HTTP/1.1[0m" [32m200 OK[0m
 [32mINFO[0m:     Shutting down
 [32mINFO[0m:     Waiting for background tasks to complete. (CTRL+C to force quit)
-[32mINFO[0m:     Finished server process [[36m1083734[0m]
+[32mINFO[0m:     Finished server process [[36m1092797[0m]
+[31mERROR[0m:    Traceback (most recent call last):
+  File "/home/ccl/anaconda3/envs/fedops_hyp/lib/python3.11/asyncio/runners.py", line 190, in run
+    return runner.run(main)
+           ^^^^^^^^^^^^^^^^
+  File "/home/ccl/anaconda3/envs/fedops_hyp/lib/python3.11/asyncio/runners.py", line 118, in run
+    return self._loop.run_until_complete(task)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "uvloop/loop.pyx", line 1512, in uvloop.loop.Loop.run_until_complete
+  File "uvloop/loop.pyx", line 1505, in uvloop.loop.Loop.run_until_complete
+  File "uvloop/loop.pyx", line 1379, in uvloop.loop.Loop.run_forever
+  File "uvloop/loop.pyx", line 557, in uvloop.loop.Loop._run
+  File "uvloop/loop.pyx", line 476, in uvloop.loop.Loop._on_idle
+  File "uvloop/cbhandles.pyx", line 83, in uvloop.loop.Handle._run
+  File "uvloop/cbhandles.pyx", line 63, in uvloop.loop.Handle._run
+  File "/home/ccl/anaconda3/envs/fedops_hyp/lib/python3.11/site-packages/uvicorn/server.py", line 69, in serve
+    with self.capture_signals():
+  File "/home/ccl/anaconda3/envs/fedops_hyp/lib/python3.11/contextlib.py", line 144, in __exit__
+    next(self.gen)
+  File "/home/ccl/anaconda3/envs/fedops_hyp/lib/python3.11/site-packages/uvicorn/server.py", line 330, in capture_signals
+    signal.raise_signal(captured_signal)
+  File "/home/ccl/anaconda3/envs/fedops_hyp/lib/python3.11/asyncio/runners.py", line 157, in _on_sigint
+    raise KeyboardInterrupt()
+KeyboardInterrupt
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/home/ccl/anaconda3/envs/fedops_hyp/lib/python3.11/site-packages/starlette/routing.py", line 699, in lifespan
+    await receive()
+  File "/home/ccl/anaconda3/envs/fedops_hyp/lib/python3.11/site-packages/uvicorn/lifespan/on.py", line 137, in receive
+    return await self.receive_queue.get()
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/ccl/anaconda3/envs/fedops_hyp/lib/python3.11/asyncio/queues.py", line 158, in get
+    await getter
+asyncio.exceptions.CancelledError
+
 [31mERROR[0m:    Exception in ASGI application
 Traceback (most recent call last):
   File "/home/ccl/anaconda3/envs/fedops_hyp/lib/python3.11/asyncio/runners.py", line 190, in run
@@ -272,44 +319,8 @@ Traceback (most recent call last):
   File "/home/ccl/anaconda3/envs/fedops_hyp/lib/python3.11/site-packages/starlette/background.py", line 26, in __call__
     await self.func(*self.args, **self.kwargs)
   File "/home/ccl/safer/FedOps/MNIST/app.py", line 160, in fl_client_start
-    await loop.run_in_executor(None, client_start)
+    model_name=self.model_name,
 asyncio.exceptions.CancelledError
-[31mERROR[0m:    Traceback (most recent call last):
-  File "/home/ccl/anaconda3/envs/fedops_hyp/lib/python3.11/asyncio/runners.py", line 190, in run
-    return runner.run(main)
-           ^^^^^^^^^^^^^^^^
-  File "/home/ccl/anaconda3/envs/fedops_hyp/lib/python3.11/asyncio/runners.py", line 118, in run
-    return self._loop.run_until_complete(task)
-           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "uvloop/loop.pyx", line 1512, in uvloop.loop.Loop.run_until_complete
-  File "uvloop/loop.pyx", line 1505, in uvloop.loop.Loop.run_until_complete
-  File "uvloop/loop.pyx", line 1379, in uvloop.loop.Loop.run_forever
-  File "uvloop/loop.pyx", line 557, in uvloop.loop.Loop._run
-  File "uvloop/loop.pyx", line 476, in uvloop.loop.Loop._on_idle
-  File "uvloop/cbhandles.pyx", line 83, in uvloop.loop.Handle._run
-  File "uvloop/cbhandles.pyx", line 63, in uvloop.loop.Handle._run
-  File "/home/ccl/anaconda3/envs/fedops_hyp/lib/python3.11/site-packages/uvicorn/server.py", line 69, in serve
-    with self.capture_signals():
-  File "/home/ccl/anaconda3/envs/fedops_hyp/lib/python3.11/contextlib.py", line 144, in __exit__
-    next(self.gen)
-  File "/home/ccl/anaconda3/envs/fedops_hyp/lib/python3.11/site-packages/uvicorn/server.py", line 330, in capture_signals
-    signal.raise_signal(captured_signal)
-  File "/home/ccl/anaconda3/envs/fedops_hyp/lib/python3.11/asyncio/runners.py", line 157, in _on_sigint
-    raise KeyboardInterrupt()
-KeyboardInterrupt
-
-During handling of the above exception, another exception occurred:
-
-Traceback (most recent call last):
-  File "/home/ccl/anaconda3/envs/fedops_hyp/lib/python3.11/site-packages/starlette/routing.py", line 699, in lifespan
-    await receive()
-  File "/home/ccl/anaconda3/envs/fedops_hyp/lib/python3.11/site-packages/uvicorn/lifespan/on.py", line 137, in receive
-    return await self.receive_queue.get()
-           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "/home/ccl/anaconda3/envs/fedops_hyp/lib/python3.11/asyncio/queues.py", line 158, in get
-    await getter
-asyncio.exceptions.CancelledError
-
 Error executing job with overrides: []
 Traceback (most recent call last):
   File "/home/ccl/anaconda3/envs/fedops_hyp/lib/python3.11/site-packages/urllib3/connection.py", line 198, in _new_conn
@@ -342,7 +353,7 @@ Traceback (most recent call last):
                 ^^^^^^^^^^^^^^^^
   File "/home/ccl/anaconda3/envs/fedops_hyp/lib/python3.11/site-packages/urllib3/connection.py", line 213, in _new_conn
     raise NewConnectionError(
-urllib3.exceptions.NewConnectionError: <urllib3.connection.HTTPConnection object at 0x7f5365a36290>: Failed to establish a new connection: [Errno 111] Connection refused
+urllib3.exceptions.NewConnectionError: <urllib3.connection.HTTPConnection object at 0x7fc07bc4e250>: Failed to establish a new connection: [Errno 111] Connection refused
 
 The above exception was the direct cause of the following exception:
 
@@ -356,7 +367,7 @@ Traceback (most recent call last):
   File "/home/ccl/anaconda3/envs/fedops_hyp/lib/python3.11/site-packages/urllib3/util/retry.py", line 519, in increment
     raise MaxRetryError(_pool, url, reason) from reason  # type: ignore[arg-type]
     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-urllib3.exceptions.MaxRetryError: HTTPConnectionPool(host='localhost', port=8004): Max retries exceeded with url: /flclient_out (Caused by NewConnectionError('<urllib3.connection.HTTPConnection object at 0x7f5365a36290>: Failed to establish a new connection: [Errno 111] Connection refused'))
+urllib3.exceptions.MaxRetryError: HTTPConnectionPool(host='localhost', port=8004): Max retries exceeded with url: /flclient_out (Caused by NewConnectionError('<urllib3.connection.HTTPConnection object at 0x7fc07bc4e250>: Failed to establish a new connection: [Errno 111] Connection refused'))
 
 During handling of the above exception, another exception occurred:
 
@@ -364,7 +375,6 @@ Traceback (most recent call last):
   File "/home/ccl/safer/FedOps/MNIST/client_main.py", line 78, in main
     fl_client.start()
   File "/home/ccl/safer/FedOps/MNIST/app.py", line 242, in start
-    client_api.ClientMangerAPI().get_client_out()
   File "/home/ccl/safer/FedOps/MNIST/client_api.py", line 36, in get_client_out
     requests.get(self.client_manager_addr + '/flclient_out')
   File "/home/ccl/anaconda3/envs/fedops_hyp/lib/python3.11/site-packages/requests/api.py", line 73, in get
@@ -381,7 +391,7 @@ Traceback (most recent call last):
         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
   File "/home/ccl/anaconda3/envs/fedops_hyp/lib/python3.11/site-packages/requests/adapters.py", line 700, in send
     raise ConnectionError(e, request=request)
-requests.exceptions.ConnectionError: HTTPConnectionPool(host='localhost', port=8004): Max retries exceeded with url: /flclient_out (Caused by NewConnectionError('<urllib3.connection.HTTPConnection object at 0x7f5365a36290>: Failed to establish a new connection: [Errno 111] Connection refused'))
+requests.exceptions.ConnectionError: HTTPConnectionPool(host='localhost', port=8004): Max retries exceeded with url: /flclient_out (Caused by NewConnectionError('<urllib3.connection.HTTPConnection object at 0x7fc07bc4e250>: Failed to establish a new connection: [Errno 111] Connection refused'))
 
 Set the environment variable HYDRA_FULL_ERROR=1 for a complete stack trace.
 Exception ignored in: Exception in thread <module 'threading' from '/home/ccl/anaconda3/envs/fedops_hyp/lib/python3.11/threading.py'>Thread-13 (_do_shutdown)
@@ -389,30 +399,30 @@ Exception ignored in: Exception in thread <module 'threading' from '/home/ccl/an
 Traceback (most recent call last):
   File "/home/ccl/anaconda3/envs/fedops_hyp/lib/python3.11/threading.py", line 1553, in _shutdown
 Traceback (most recent call last):
-      File "uvloop/loop.pyx", line 3254, in uvloop.loop.Loop._do_shutdown
-atexit_call()
+  File "uvloop/loop.pyx", line 3254, in uvloop.loop.Loop._do_shutdown
+    atexit_call()
   File "/home/ccl/anaconda3/envs/fedops_hyp/lib/python3.11/concurrent/futures/thread.py", line 31, in _python_exit
-      File "uvloop/loop.pyx", line 1290, in uvloop.loop.Loop.call_soon_threadsafe
-t.join()
-  File "/home/ccl/anaconda3/envs/fedops_hyp/lib/python3.11/threading.py", line 1112, in join
+  File "uvloop/loop.pyx", line 1290, in uvloop.loop.Loop.call_soon_threadsafe
+    t.join()
   File "uvloop/loop.pyx", line 673, in uvloop.loop.Loop._append_ready_handle
-    self._wait_for_tstate_lock()
-  File "uvloop/loop.pyx", line 705, in uvloop.loop.Loop._check_closed
-  File "/home/ccl/anaconda3/envs/fedops_hyp/lib/python3.11/threading.py", line 1132, in _wait_for_tstate_lock
-    if lock.acquire(block, timeout):
-RuntimeError :  Event loop is closed
+  File "/home/ccl/anaconda3/envs/fedops_hyp/lib/python3.11/threading.py", line 1112, in join
+      File "uvloop/loop.pyx", line 705, in uvloop.loop.Loop._check_closed
+self._wait_for_tstate_lock()
+RuntimeError  File "/home/ccl/anaconda3/envs/fedops_hyp/lib/python3.11/threading.py", line 1132, in _wait_for_tstate_lock
+:     Event loop is closedif lock.acquire(block, timeout):
+
 
   During handling of the above exception, another exception occurred:
-^^
-^^Traceback (most recent call last):
+
+  Traceback (most recent call last):
 ^^  File "/home/ccl/anaconda3/envs/fedops_hyp/lib/python3.11/threading.py", line 1038, in _bootstrap_inner
 ^^^    ^self.run()^
 ^^  File "/home/ccl/anaconda3/envs/fedops_hyp/lib/python3.11/threading.py", line 975, in run
 ^^    ^self._target(*self._args, **self._kwargs)^
 ^^  File "uvloop/loop.pyx", line 3256, in uvloop.loop.Loop._do_shutdown
 ^^^^^  File "uvloop/loop.pyx", line 1290, in uvloop.loop.Loop.call_soon_threadsafe
-^^  File "uvloop/loop.pyx", line 673, in uvloop.loop.Loop._append_ready_handle
+^^^^^^  File "uvloop/loop.pyx", line 673, in uvloop.loop.Loop._append_ready_handle
 ^^
-  File "uvloop/loop.pyx", line 705, in uvloop.loop.Loop._check_closed
-KeyboardInterrupt: RuntimeError
-: Event loop is closed
+KeyboardInterrupt  File "uvloop/loop.pyx", line 705, in uvloop.loop.Loop._check_closed
+:
+RuntimeError: Event loop is closed

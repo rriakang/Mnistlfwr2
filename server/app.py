@@ -1,4 +1,3 @@
-# app.py
 import logging
 from typing import Dict, Optional, Tuple
 import flwr as fl
@@ -14,9 +13,6 @@ from . import server_api
 from . import server_utils
 from .server_cluster import GeneticCFLStrategy
 
-# TF warning log filtering
-# os.environ["TF_CPP_MIN_LOG_LEVEL"] = "3"
-
 logging.basicConfig(level=logging.DEBUG,
                     format="%(asctime)s [%(levelname)8.8s] %(message)s",
                     handlers=[logging.StreamHandler()])
@@ -26,7 +22,7 @@ logger = logging.getLogger(__name__)
 class FLServer():
     def __init__(self, cfg, model, model_name, model_type, gl_val_loader=None, x_val=None, y_val=None, test_torch=None):
         self.task_id = os.environ.get('TASK_ID')  # Set FL Task ID
-        self.server = server_utils.FLServerStatus()  # FLServerStatus 인스턴스 생성
+        self.server = server_utils.FLServerStatus()
         self.model_type = model_type
         self.cfg = cfg
         self.strategy = cfg.server.strategy
@@ -43,7 +39,7 @@ class FLServer():
 
         if self.model_type == "Tensorflow":
             self.x_val = x_val
-            self.y_val = y_val  
+            self.y_val = y_val
         elif self.model_type == "Pytorch":
             self.gl_val_loader = gl_val_loader
             self.test_torch = test_torch
@@ -81,21 +77,27 @@ class FLServer():
             model_parameters = [val.cpu().numpy() for _, val in model.state_dict().items()]
             logging.info('hyperparameter mode: model_parameters set')
 
-        # 전략(Strategy) 인스턴스화
-         # model_parameters 할당 부분...
+        # 전략 인스턴스화
         if self.model_type == "hyperparameter":
-            # 구체적인 on_fit_config_fn을 생성해서 전달합니다.
+            # hyperparameter 모드에서는 GeneticCFLStrategy 사용
             on_fit_config_fn = GeneticCFLStrategy.get_on_fit_config(
                 self.learning_rate, self.batch_size, self.local_epochs, self.num_rounds
             )
-            
+
+            # 수정: fraction_fit=1.0, min_fit_clients=1, min_available_clients=1 등 추가
             strategy_config = {
-                "_target_": "server.server_cluster.GeneticCFLStrategy",  # 실제 클래스의 전체 경로를 사용해야 합니다.
+                "_target_": "server.server_cluster.GeneticCFLStrategy",
                 "init_lr": self.learning_rate,
                 "init_bs": self.batch_size,
                 "epochs": self.local_epochs,
+                # FedAvg 인자
+                "fraction_fit": 1.0,
+                "min_fit_clients": 1,
+                "min_available_clients": 1,
+                "fraction_evaluate": 0.0,
+                "min_evaluate_clients": 1,
             }
-            
+
             strategy = instantiate(
                 strategy_config,
                 initial_parameters=fl.common.ndarrays_to_parameters(model_parameters),
@@ -103,8 +105,6 @@ class FLServer():
                 on_fit_config_fn=on_fit_config_fn,
                 on_evaluate_config_fn=self.evaluate_config
             )
-
-
 
         elif self.model_type in ["Tensorflow", "Pytorch", "Huggingface"]:
             strategy = instantiate(
@@ -119,18 +119,14 @@ class FLServer():
 
         # Flower 서버 시작
         fl.server.start_server(
-            server_address="0.0.0.0:8080",
+            server_address="0.0.0.0:40025",  # <-- 40025로 열어서 클라이언트가 붙도록(예시)
             config=fl.server.ServerConfig(num_rounds=self.num_rounds),
             strategy=strategy,
         )
 
     def get_eval_fn(self, model, model_name):
-        """서버 평가 함수 반환: 매 라운드 후 평가 수행"""
-        def evaluate(
-                server_round: int,
-                parameters_ndarrays: fl.common.NDArrays,
-                config: Dict[str, fl.common.Scalar],
-        ) -> Optional[Tuple[float, Dict[str, fl.common.Scalar]]]:
+        """서버 평가 함수: 매 라운드 후 evaluate"""
+        def evaluate(server_round: int, parameters_ndarrays: fl.common.NDArrays, config: Dict[str, fl.common.Scalar]):
             gl_model_path = f'./{model_name}_gl_model_V{self.server.gl_model_v}'
             metrics = None
             if self.model_type == "Tensorflow":
@@ -177,15 +173,24 @@ class FLServer():
             if self.server.round >= 1:
                 self.server.end_by_round = time.time() - self.server.start_by_round
                 if metrics is not None:
-                    server_eval_result = {"fl_task_id": self.task_id, "round": self.server.round,
-                                            "gl_loss": loss, "gl_accuracy": accuracy,
-                                            "run_time_by_round": self.server.end_by_round,
-                                            **metrics, "gl_model_v": self.server.gl_model_v}
+                    server_eval_result = {
+                        "fl_task_id": self.task_id,
+                        "round": self.server.round,
+                        "gl_loss": loss,
+                        "gl_accuracy": accuracy,
+                        "run_time_by_round": self.server.end_by_round,
+                        **metrics,
+                        "gl_model_v": self.server.gl_model_v
+                    }
                 else:
-                    server_eval_result = {"fl_task_id": self.task_id, "round": self.server.round,
-                                            "gl_loss": loss, "gl_accuracy": accuracy,
-                                            "run_time_by_round": self.server.end_by_round,
-                                            "gl_model_v": self.server.gl_model_v}
+                    server_eval_result = {
+                        "fl_task_id": self.task_id,
+                        "round": self.server.round,
+                        "gl_loss": loss,
+                        "gl_accuracy": accuracy,
+                        "run_time_by_round": self.server.end_by_round,
+                        "gl_model_v": self.server.gl_model_v
+                    }
                 json_server_eval = json.dumps(server_eval_result)
                 logging.info(f'server_eval_result - {json_server_eval}')
                 server_api.ServerAPI(self.task_id).put_gl_model_evaluation(json_server_eval)
@@ -194,6 +199,7 @@ class FLServer():
                 return loss, {"accuracy": accuracy, **metrics}
             else:
                 return loss, {"accuracy": accuracy}
+
         return evaluate
 
     @staticmethod
