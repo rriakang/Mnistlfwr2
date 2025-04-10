@@ -1,0 +1,7 @@
+{"time":"2025-04-11T02:14:01.970571106+09:00","level":"INFO","msg":"stream: starting","core version":"0.19.9","symlink path":"/home/ccl/safer/FedOps/MNIST/wandb/run-20250411_021401-tcm4bflo/logs/debug-core.log"}
+{"time":"2025-04-11T02:14:02.395485621+09:00","level":"INFO","msg":"created new stream","id":"tcm4bflo"}
+{"time":"2025-04-11T02:14:02.395556807+09:00","level":"INFO","msg":"stream: started","id":"tcm4bflo"}
+{"time":"2025-04-11T02:14:02.395584368+09:00","level":"INFO","msg":"writer: Do: started","stream_id":"tcm4bflo"}
+{"time":"2025-04-11T02:14:02.395610671+09:00","level":"INFO","msg":"handler: started","stream_id":"tcm4bflo"}
+{"time":"2025-04-11T02:14:02.395675192+09:00","level":"INFO","msg":"sender: started","stream_id":"tcm4bflo"}
+{"time":"2025-04-11T02:14:02.707933675+09:00","level":"INFO","msg":"Starting system monitor"}

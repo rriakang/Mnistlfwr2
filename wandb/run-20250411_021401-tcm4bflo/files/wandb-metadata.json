@@ -1,0 +1,42 @@
+{
+  "os": "Linux-5.15.0-48-generic-x86_64-with-glibc2.31",
+  "python": "CPython 3.11.5",
+  "startedAt": "2025-04-10T17:14:01.966526Z",
+  "program": "/home/ccl/safer/FedOps/MNIST/client_main.py",
+  "codePath": "client_main.py",
+  "git": {
+    "remote": "https://github.com/rriakang/Mnist_flwr.git",
+    "commit": "697ea50e39ac3014d9dd175a7c9416f5096e754b"
+  },
+  "email": "rirakang@gachon.ac.kr",
+  "root": "/home/ccl/safer/FedOps/MNIST",
+  "host": "ccl-e-server",
+  "executable": "/home/ccl/anaconda3/envs/fedops_hyp/bin/python",
+  "codePathLocal": "client_main.py",
+  "cpu_count": 24,
+  "cpu_count_logical": 48,
+  "gpu": "NVIDIA GeForce RTX 2080 Ti",
+  "gpu_count": 1,
+  "disk": {
+    "/": {
+      "total": "589432532992",
+      "used": "467021488128"
+    }
+  },
+  "memory": {
+    "total": "67159564288"
+  },
+  "cpu": {
+    "count": 24,
+    "countLogical": 48
+  },
+  "gpu_nvidia": [
+    {
+      "name": "NVIDIA GeForce RTX 2080 Ti",
+      "memoryTotal": "11811160064",
+      "cudaCores": 4352,
+      "architecture": "Turing"
+    }
+  ],
+  "cudaVersion": "11.7"
+}

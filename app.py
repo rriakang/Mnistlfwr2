@@ -1,5 +1,3 @@
-
-
 import logging, json
 import socket
 import time
@@ -41,7 +39,6 @@ class FLClientTask():
             self.wandb_project = cfg.wandb.project
             self.wandb_name = f"{self.status.client_name}-v{self.status.gl_model}({datetime.now()})"
             
-
 
         if self.model_type=="Tensorflow":
             self.x_train = fl_task["x_train"]
@@ -96,25 +93,30 @@ class FLClientTask():
         
         # Initialize wandb_config, client object
         wandb_config = {}
-        # client = None
         
         try:
             loop = asyncio.get_event_loop()
             if self.model_type == "Tensorflow":
-                client = client_fl.FLClient(model=self.model, x_train=self.x_train, y_train=self.y_train, x_test=self.x_test,
-                                            y_test=self.y_test,
-                                            validation_split=self.validation_split, fl_task_id=self.task_id, client_mac=self.status.client_mac, 
-                                            client_name=self.status.client_name,
-                                            fl_round=1, gl_model=self.status.gl_model, wandb_use=self.wandb_use, wandb_name=self.wandb_name,
-                                            wandb_run=wandb_run, model_name=self.model_name, model_type=self.model_type)
+                client = client_fl.FLClient(
+                    model=self.model, x_train=self.x_train, y_train=self.y_train,
+                    x_test=self.x_test, y_test=self.y_test,
+                    validation_split=self.validation_split, fl_task_id=self.task_id,
+                    client_mac=self.status.client_mac, client_name=self.status.client_name,
+                    fl_round=1, gl_model=self.status.gl_model, wandb_use=self.wandb_use,
+                    wandb_name=self.wandb_name, wandb_run=wandb_run,
+                    model_name=self.model_name, model_type=self.model_type
+                )
 
             elif self.model_type == "Pytorch":
-                client = client_fl.FLClient(model=self.model, validation_split=self.validation_split, 
-                                            fl_task_id=self.task_id, client_mac=self.status.client_mac, client_name=self.status.client_name,
-                                            fl_round=1, gl_model=self.status.gl_model, wandb_use=self.wandb_use,wandb_name=self.wandb_name,
-                                            wandb_run=wandb_run, model_name=self.model_name, model_type=self.model_type, 
-                                            train_loader=self.train_loader, val_loader=self.val_loader, test_loader=self.test_loader, 
-                                            cfg=self.cfg, train_torch=self.train_torch, test_torch=self.test_torch)
+                client = client_fl.FLClient(
+                    model=self.model, validation_split=self.validation_split, 
+                    fl_task_id=self.task_id, client_mac=self.status.client_mac,
+                    client_name=self.status.client_name, fl_round=1, gl_model=self.status.gl_model,
+                    wandb_use=self.wandb_use, wandb_name=self.wandb_name, wandb_run=wandb_run,
+                    model_name=self.model_name, model_type=self.model_type, 
+                    train_loader=self.train_loader, val_loader=self.val_loader, test_loader=self.test_loader, 
+                    cfg=self.cfg, train_torch=self.train_torch, test_torch=self.test_torch
+                )
 
             elif self.model_type == "Huggingface":
                 client = client_fl.FLClient(
@@ -136,18 +138,19 @@ class FLClientTask():
                     formatting_prompts_func=self.formatting_prompts_func,
                     data_collator=self.data_collator,
                 )
-            elif self.model_type == "hyperparameter":
-                client = client_fl.FLClient(model=self.model, validation_split=self.validation_split, 
-                                            fl_task_id=self.task_id, client_mac=self.status.client_mac, client_name=self.status.client_name,
-                                            fl_round=1, gl_model=self.status.gl_model, wandb_use=self.wandb_use,wandb_name=self.wandb_name,
-                                            wandb_run=wandb_run, model_name=self.model_name, model_type=self.model_type, 
-                                            train_loader=self.train_loader, val_loader=self.val_loader, test_loader=self.test_loader, 
-                                            cfg=self.cfg, train_torch=self.train_torch, test_torch=self.test_torch)
-            # Check data fl client data status in the wandb
-            # label_values = [[i, self.y_label_counter[i]] for i in range(self.output_size)]
-            # logging.info(f'label_values: {label_values}')
 
-            # client_start object
+            elif self.model_type == "hyperparameter":
+                client = client_fl.FLClient(
+                    model=self.model, validation_split=self.validation_split, 
+                    fl_task_id=self.task_id, client_mac=self.status.client_mac,
+                    client_name=self.status.client_name, fl_round=1, gl_model=self.status.gl_model,
+                    wandb_use=self.wandb_use, wandb_name=self.wandb_name, wandb_run=wandb_run,
+                    model_name=self.model_name, model_type=self.model_type, 
+                    train_loader=self.train_loader, val_loader=self.val_loader, test_loader=self.test_loader, 
+                    cfg=self.cfg, train_torch=self.train_torch, test_torch=self.test_torch
+                )
+
+            # Prepare partial function for client start
             client_start = client_fl.flower_client_start(self.status.server_IP, client)
 
             # FL client start time
@@ -161,24 +164,29 @@ class FLClientTask():
             # FL client end time
             fl_end_time = time.time() - fl_start_time
             
-            
             if self.wandb_use:
                 wandb_config = {"dataset": self.dataset_name, "model_architecture": self.model_name}
                 wandb_run.config.update(wandb_config, allow_val_change=True)
                 
-                # client_wandb.data_status_wandb(wandb_run, label_values)
-                
                 # Wandb log(Client round end time)
-                wandb_run.log({"operation_time": fl_end_time, "gl_model_v": self.status.gl_model},step=self.status.gl_model)
+                wandb_run.log({"operation_time": fl_end_time, "gl_model_v": self.status.gl_model},
+                              step=self.status.gl_model)
                 # close wandb
                 wandb_run.finish()
                 
                 # Get client system result from wandb and send it to client_performance pod
-                client_wandb.client_system_wandb(self.task_id, self.status.client_mac, self.status.client_name, 
-                                                 self.status.gl_model, self.wandb_name, self.wandb_account, self.wandb_project)
+                client_wandb.client_system_wandb(
+                    self.task_id, self.status.client_mac, self.status.client_name, 
+                    self.status.gl_model, self.wandb_name, self.wandb_account, self.wandb_project
+                )
 
-            client_all_time_result = {"fl_task_id": self.task_id, "client_mac": self.status.client_mac, "client_name": self.status.client_name,
-                                      "operation_time": fl_end_time,"gl_model_v": self.status.gl_model}
+            client_all_time_result = {
+                "fl_task_id": self.task_id,
+                "client_mac": self.status.client_mac,
+                "client_name": self.status.client_name,
+                "operation_time": fl_end_time,
+                "gl_model_v": self.status.gl_model
+            }
             json_result = json.dumps(client_all_time_result)
             logging.info(f'client_operation_time - {json_result}')
 
@@ -193,41 +201,31 @@ class FLClientTask():
             logging.info('FL Client Learning Finish')
 
         except Exception as e:
-            logging.info('[E][PC0002] learning', e)
+            # 수정된 부분: 문자열 포매팅 오류를 피하기 위해 f-string 사용
+            logging.info(f"[E][PC0002] learning {e}")
             self.status.client_fail = True
             self.status.client_start = await client_utils.notify_fail()
             raise e
 
     def start(self):
-        # Configure routes, endpoints, and other FastAPI-related logic here
-        # Example:
         @self.app.get('/online')
         async def get_info():
-            
             return self.status
 
-        # asynchronously start client
         @self.app.post("/start")
         async def client_start_trigger(background_tasks: BackgroundTasks):
 
-            # client_manager address
             client_res = client_api.ClientMangerAPI().get_info()
-
-            # # # latest global model version
             last_gl_model_v = client_res.json()['GL_Model_V']
 
-            # # next global model version
             self.status.gl_model = last_gl_model_v
-            # self.status.next_gl_model = 1
 
             logging.info('bulid model')
-
             logging.info('FL start')
             self.status.client_start = True
 
             # get the FL server IP
             self.status.server_IP = client_api.ClientServerAPI(self.task_id).get_port()
-            # self.status.server_IP = "0.0.0.0:8080"
 
             # start FL Client
             background_tasks.add_task(self.fl_client_start)
@@ -235,16 +233,11 @@ class FLClientTask():
             return self.status
 
         try:
-            # create client api => to connect client manager
             uvicorn.run(self.app, host='0.0.0.0', port=self.client_port)
 
         except Exception as e:
-            # Handle any exceptions that occur during the execution
             logging.error(f'An error occurred during execution: {e}')
 
         finally:
-            # FL client out
             client_api.ClientMangerAPI().get_client_out()
             logging.info(f'{self.status.client_name};{self.status.client_mac}-client close')
-
-

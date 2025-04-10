@@ -1,11 +1,12 @@
-#client_fl.py
-
-from collections import OrderedDict
 import json, logging
 import flwr as fl
 import time
 import os
+from collections import OrderedDict
 from functools import partial
+import warnings
+import torch
+
 import client_api
 import client_utils
 
@@ -22,21 +23,45 @@ logging.basicConfig(level=logging.DEBUG, format="%(asctime)s [%(levelname)8.8s] 
                     handlers=handlers_list)
 
 logger = logging.getLogger(__name__)
-import warnings
-import torch
 
 # Avoid warnings
 os.environ["TOKENIZERS_PARALLELISM"] = "true"
 os.environ["RAY_DISABLE_DOCKER_CPU_WARNING"] = "1"
 warnings.filterwarnings("ignore", category=UserWarning)
 
-class FLClient(fl.client.NumPyClient):
 
-    def __init__(self, model, validation_split, fl_task_id, client_mac, client_name, fl_round,gl_model, wandb_use, wandb_name,
-                 wandb_run=None, model_name=None, model_type=None, x_train=None, y_train=None, x_test=None, y_test=None, 
-                 train_loader=None, val_loader=None, test_loader=None, cfg=None, train_torch=None, test_torch=None,
-                 finetune_llm=None, trainset=None, tokenizer=None, data_collator=None, formatting_prompts_func=None, num_rounds=None):
-        
+class FLClient(fl.client.NumPyClient):
+    def __init__(
+        self,
+        model,
+        validation_split,
+        fl_task_id,
+        client_mac,
+        client_name,
+        fl_round,
+        gl_model,
+        wandb_use,
+        wandb_name,
+        wandb_run=None,
+        model_name=None,
+        model_type=None,
+        x_train=None,
+        y_train=None,
+        x_test=None,
+        y_test=None,
+        train_loader=None,
+        val_loader=None,
+        test_loader=None,
+        cfg=None,
+        train_torch=None,
+        test_torch=None,
+        finetune_llm=None,
+        trainset=None,
+        tokenizer=None,
+        data_collator=None,
+        formatting_prompts_func=None,
+        num_rounds=None
+    ):
         self.cfg = cfg
         self.model_type = model_type
         self.model = model
@@ -49,12 +74,12 @@ class FLClient(fl.client.NumPyClient):
         self.model_name = model_name
         self.wandb_use = wandb_use
         self.wandb_run = wandb_run
-        self.wandb_name = wandb_name            
-        
-        if self.model_type == "Tensorflow": 
+        self.wandb_name = wandb_name
+
+        if self.model_type == "Tensorflow":
             self.x_train, self.y_train = x_train, y_train
             self.x_test, self.y_test = x_test, y_test
-        
+
         elif self.model_type == "Pytorch":
             self.train_loader = train_loader
             self.val_loader = val_loader
@@ -68,7 +93,9 @@ class FLClient(fl.client.NumPyClient):
             self.finetune_llm = finetune_llm
             self.data_collator = data_collator
             self.formatting_prompts_func = formatting_prompts_func
+
         elif self.model_type == "hyperparameter":
+            # (수정) hyperparameter 모드도 train_loader, val_loader, test_loader를 갖고 있음
             self.train_loader = train_loader
             self.val_loader = val_loader
             self.test_loader = test_loader
@@ -76,77 +103,73 @@ class FLClient(fl.client.NumPyClient):
             self.test_torch = test_torch
 
     def set_parameters(self, parameters):
+        """Load parameters into local model."""
         if self.model_type in ["Tensorflow"]:
-            raise Exception("Not implemented")
-        
+            raise Exception("Not implemented (server-side initialization)")
+
         elif self.model_type in ["Pytorch"]:
-            keys = [k for k in self.model.state_dict().keys() if "bn" not in k] # Excluding parameters of BN layers
+            # Excluding parameters of BN layers
+            keys = [k for k in self.model.state_dict().keys() if "bn" not in k]
             params_dict = zip(keys, parameters)
             state_dict = OrderedDict({k: torch.tensor(v) for k, v in params_dict})
-            # self.model.load_state_dict(state_dict, strict=True)
             self.model.load_state_dict(state_dict, strict=False)
 
         elif self.model_type in ["Huggingface"]:
             client_utils.set_parameters_for_llm(self.model, parameters)
-        
+
         elif self.model_type == "hyperparameter":
+            # hyperparameter 모드도 pytorch 기반이므로 아래와 같이 처리
             params = [torch.tensor(val) for val in parameters]
             client_utils.set_params(self.model, params)
 
-            
-    
-            
-    
     def get_parameters(self):
-        """Get parameters of the local model."""
+        """Return the current local model parameters."""
         if self.model_type == "Tensorflow":
             raise Exception("Not implemented (server-side parameter initialization)")
-        
+
         elif self.model_type == "Pytorch":
-            # Excluding parameters of BN layers
             return [val.cpu().numpy() for name, val in self.model.state_dict().items() if "bn" not in name]
-        
+
         elif self.model_type == "Huggingface":
             return client_utils.get_parameters_for_llm(self.model)
-        
-        elif self.model_type == "hyperparameter" :
+
+        elif self.model_type == "hyperparameter":
             return [val.cpu().numpy() for val in client_utils.get_params(self.model)]
-        
 
     def get_properties(self, config):
-        """Get properties of client."""
         raise Exception("Not implemented")
 
     def fit(self, parameters, config):
-        """Train parameters on the locally held training set."""
-
+        """
+        Train parameters on the locally held training set.
+        This method is called by the server for each training round.
+        """
         print(f"config: {config}")
-        # Get hyperparameters for this round
+
+        # 서버에서 내려준 하이퍼파라미터
         batch_size: int = config["batch_size"]
         epochs: int = config["local_epochs"]
         num_rounds: int = config["num_rounds"]
-        lr : int = config["learning_rate"]
-        
+        lr: float = config["learning_rate"]
 
         if self.wandb_use:
-            # add wandb config
-            self.wandb_run.config.update({"batch_size": batch_size, "epochs": epochs, "num_rounds": num_rounds}, allow_val_change=True)
+            self.wandb_run.config.update(
+                {"batch_size": batch_size, "epochs": epochs, "num_rounds": num_rounds},
+                allow_val_change=True
+            )
 
-        # start round time
+        # Round 시작 시간
         round_start_time = time.time()
 
-        # model path for saving local model
+        # 로컬 모델 저장 경로
         model_path = f'./local_model/{self.fl_task_id}/{self.model_name}_local_model_V{self.gl_model}'
-
-        # Initialize results
         results = {}
-        
-        # Training Tensorflow
+
+        # ─────────────────────────────────────────────────
+        # 1. TensorFlow
+        # ─────────────────────────────────────────────────
         if self.model_type == "Tensorflow":
-            # Update local model parameters
             self.model.set_weights(parameters)
-            
-            # Train the model using hyperparameters from config
             history = self.model.fit(
                 self.x_train,
                 self.y_train,
@@ -154,297 +177,307 @@ class FLClient(fl.client.NumPyClient):
                 epochs,
                 validation_split=self.validation_split,
             )
+            train_loss = history.history["loss"][-1]
+            train_accuracy = history.history["accuracy"][-1]
+            val_loss = history.history["val_loss"][-1]
+            val_accuracy = history.history["val_accuracy"][-1]
 
-            train_loss = history.history["loss"][len(history.history["loss"])-1]
-            train_accuracy = history.history["accuracy"][len(history.history["accuracy"])-1]
             results = {
                 "train_loss": train_loss,
                 "train_accuracy": train_accuracy,
-                "val_loss": history.history["val_loss"][len(history.history["val_loss"])-1],
-                "val_accuracy": history.history["val_accuracy"][len(history.history["val_accuracy"])-1],
+                "val_loss": val_loss,
+                "val_accuracy": val_accuracy,
             }
-
-            # Return updated model parameters
             parameters_prime = self.model.get_weights()
             num_examples_train = len(self.x_train)
 
-            
-            # save local model
-            self.model.save(model_path+'.h5')
-            
+            self.model.save(model_path + '.h5')
 
-        # Training Torch
+        # ─────────────────────────────────────────────────
+        # 2. Pytorch
+        # ─────────────────────────────────────────────────
         elif self.model_type == "Pytorch":
-            # Update local model parameters
             self.set_parameters(parameters)
-            
             trained_model = self.train_torch(self.model, self.train_loader, epochs, self.cfg)
-            
+
             train_loss, train_accuracy, train_metrics = self.test_torch(trained_model, self.train_loader, self.cfg)
             val_loss, val_accuracy, val_metrics = self.test_torch(trained_model, self.val_loader, self.cfg)
-            
-            if train_metrics!=None:
-                train_results = {"loss": train_loss,"accuracy": train_accuracy,**train_metrics}
-                val_results = {"loss": val_loss,"accuracy": val_accuracy, **val_metrics}
-            else:
-                train_results = {"loss": train_loss,"accuracy": train_accuracy}
-                val_results = {"loss": val_loss,"accuracy": val_accuracy}
-                
-            # Prefixing keys with 'train_' and 'val_'
-            train_results_prefixed = {"train_" + key: value for key, value in train_results.items()}
-            val_results_prefixed = {"val_" + key: value for key, value in val_results.items()}
 
-            # Return updated model parameters
+            if train_metrics is not None:
+                train_results = {"loss": train_loss, "accuracy": train_accuracy, **train_metrics}
+                val_results = {"loss": val_loss, "accuracy": val_accuracy, **val_metrics}
+            else:
+                train_results = {"loss": train_loss, "accuracy": train_accuracy}
+                val_results = {"loss": val_loss, "accuracy": val_accuracy}
+
+            # Prefixing
+            train_results_prefixed = {"train_" + k: v for k, v in train_results.items()}
+            val_results_prefixed = {"val_" + k: v for k, v in val_results.items()}
+
             parameters_prime = self.get_parameters()
             num_examples_train = len(self.train_loader)
-            
-            # Save model weights
-            import torch
-            torch.save(self.model.state_dict(), model_path+'.pth')
+            torch.save(self.model.state_dict(), model_path + '.pth')
 
+            results = {"fl_task_id": self.fl_task_id, **train_results_prefixed, **val_results_prefixed}
+
+        # ─────────────────────────────────────────────────
+        # 3. Huggingface
+        # ─────────────────────────────────────────────────
         elif self.model_type == "Huggingface":
             train_results_prefixed = {}
             val_results_prefixed = {}
 
-            # Update local model parameters: LoRA Adapter params
             self.set_parameters(parameters)
-            trained_model = self.finetune_llm(self.model, self.trainset, self.tokenizer, self.formatting_prompts_func, self.data_collator)
+            trained_model = self.finetune_llm(
+                self.model, self.trainset, self.tokenizer,
+                self.formatting_prompts_func, self.data_collator
+            )
             parameters_prime = self.get_parameters()
             num_examples_train = len(self.trainset)
 
-            train_loss = results["train_loss"] if "train_loss" in results else None
+            # 예: train_loss만
+            train_loss = results.get("train_loss", None)
             results = {"train_loss": train_loss}
 
             model_save_path = model_path
             self.model.save_pretrained(model_save_path)
-            # 선택적으로 tokenizer도 함께 저장
             self.tokenizer.save_pretrained(model_save_path)
-            
-        elif self.model_type == "hyperparameter":
-            train_results_prefixed = {
-                    "train_loss": loss,
-                    "train_lr": self.lr,
-                    "train_batch_size": self.bs
-                }
-            # hyperparameter에서는 validation set을 사용하지 않으면 빈 dict으로 처리 가능
-            val_results_prefixed = {}
-            try:
-                logger.info(f"[Client {self.client_name}] train_subset size: {len(self.train_subset)}")
 
-                # 1) 모델 파라미터 세팅
+        # ─────────────────────────────────────────────────
+        # 4. hyperparameter
+        # ─────────────────────────────────────────────────
+        elif self.model_type == "hyperparameter":
+            try:
+                # GPU/CPU 설정
+                device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
+                self.device = device
+
+                logger.info(f"[Client {self.client_name}] train_loader size: {len(self.train_loader.dataset)}")
+
+                # 서버에서 받은 파라미터 적용
                 self.set_parameters(parameters)
 
-                # 2) config에서 lr, bs, epochs 추출
-                self.lr = config.get("lr", lr)
-                self.bs = config.get("batch_size", batch_size)
-                epochs = config.get("local_epochs", epochs)
+                # 서버에서 내려준 lr, batch_size, epochs
+                # (※ config["learning_rate"], config["batch_size"], config["local_epochs"] 사용)
+                # 위에서 이미 batch_size, lr, epochs 추출함
 
-                # 3) 로컬 학습 진행 (local_train은 미리 정의된 함수)
+                # 로컬 학습 진행
                 loss = client_utils.local_train(
                     model=self.model,
-                    train_subset=self.train_subset,
-                    lr=self.lr,
-                    batch_size=self.bs,
+                    train_subset=self.train_loader.dataset,
+                    lr=lr,
+                    batch_size=batch_size,
                     epochs=epochs,
                     device=self.device
                 )
 
-                # 4) 업데이트된 파라미터 리턴
-                updated_params = self.get_parameters()
+                parameters_prime = self.get_parameters()
+                num_examples_train = len(self.train_loader.dataset)
+
+                # 모델 저장
+                import os
+                os.makedirs(os.path.dirname(model_path), exist_ok=True)
+                torch.save(self.model.state_dict(), model_path + '.pth')
+
+                # metrics
                 metrics = {
                     "loss": float(loss),
-                    "lr": float(self.lr),
-                    "batch_size": int(self.bs)
+                    "lr": float(lr),
+                    "batch_size": int(batch_size)
                 }
 
-                num_examples_train = len(self.train_subset)
-
-                # 모델 저장 (선택적)
-                torch.save(self.model.state_dict(), f'./local_model/{self.fl_task_id}/{self.model_name}_local_model_V{self.gl_model}.pth')
-
-                results = {
+                # train/val results
+                train_results_prefixed = {
                     "train_loss": loss,
-                    "train_lr": self.lr,
-                    "train_batch_size": self.bs
+                    "train_lr": lr,
+                    "train_batch_size": batch_size
                 }
+                val_results_prefixed = {}
+
+                # 결과 dict
+                results = {
+                    "fl_task_id": self.fl_task_id,
+                    "round": self.fl_round,
+                    "gl_model_v": self.gl_model,
+                    "train_time": 0.0  # (아래에서 overwrite)
+                }
+
+                # train_results_prefixed, val_results_prefixed -> 아래서 합치기
 
             except Exception as e:
-                logger.error(f"[Client {self.client_name}] Exception in fit: {e}")
+                logger.error(f"[Client {self.client_name}] Exception in fit (hyperparameter): {e}")
                 raise e
 
-        
         else:
             raise ValueError("Unsupported model_type")
 
-
-        # end round time
+        # ─────────────────────────────────────────────────
+        # 라운드 종료 시간
+        # ─────────────────────────────────────────────────
         round_end_time = time.time() - round_start_time
 
+        # W&B 로깅
         if self.wandb_use:
-            # wandb train log
-            self.wandb_run.log({"train_time": round_end_time, "round": self.fl_round}, step=self.fl_round)  # train time
+            self.wandb_run.log({"train_time": round_end_time, "round": self.fl_round}, step=self.fl_round)
 
-            # Log training results
-            for key, value in train_results_prefixed.items():
-                self.wandb_run.log({key: value, "round": self.fl_round}, step=self.fl_round)
+            # hyperparameter 모드 등에서 train_results_prefixed/val_results_prefixed가 있으면 여기도 로깅
+            # (위에서 변수를 만들었다면 loop를 돌려 푸시)
+            if "train_lr" in results:  # 단순 예시
+                self.wandb_run.log({"train_lr": results["train_lr"], "round": self.fl_round}, step=self.fl_round)
+            # 필요하면 더 추가
 
-            # Log validation results
-            for key, value in val_results_prefixed.items():
-                self.wandb_run.log({key: value, "round": self.fl_round}, step=self.fl_round)
+        # 학습 후 결과 취합 (train_performance)
+        # train_results_prefixed/val_results_prefixed가 없을 수 있으므로 대비
+        train_results_prefixed = locals().get("train_results_prefixed", {})
+        val_results_prefixed = locals().get("val_results_prefixed", {})
 
-        # if train_metrics!=None:
-        #     # Training: model performance by round
-        #     results = {"fl_task_id": self.fl_task_id, "client_mac": self.client_mac, "client_name": self.client_name, "round": self.fl_round, "gl_model_v": self.gl_model,
-        #                 "train_time": round_end_time, **train_results_prefixed, **val_results_prefixed}
-        # else:
-        #     # Training: model performance by round
-        #     results = {"fl_task_id": self.fl_task_id, "client_mac": self.client_mac, "client_name": self.client_name, "round": self.fl_round, "gl_model_v": self.gl_model,
-        #                 "train_time": round_end_time}
-        
-        results = {"fl_task_id": self.fl_task_id, "client_mac": self.client_mac, "client_name": self.client_name, "round": self.fl_round, "gl_model_v": self.gl_model,
-                        **train_results_prefixed, **val_results_prefixed,"train_time": round_end_time, 'wandb_name': self.wandb_name}
+        final_results = {
+            "fl_task_id": self.fl_task_id,
+            "client_mac": self.client_mac,
+            "client_name": self.client_name,
+            "round": self.fl_round,
+            "gl_model_v": self.gl_model,
+            "train_time": round_end_time,
+            "wandb_name": self.wandb_name,
+            **train_results_prefixed,
+            **val_results_prefixed
+        }
 
-        json_result = json.dumps(results)
+        json_result = json.dumps(final_results)
         logger.info(f'train_performance - {json_result}')
 
-        # send train_result to client_performance pod
+        # 성능 서버에 결과 전송
         client_api.ClientServerAPI(self.fl_task_id).put_train_result(json_result)
 
-        return parameters_prime, num_examples_train, {**train_results_prefixed, **val_results_prefixed}
-
+        return (
+            locals().get("parameters_prime", []),
+            locals().get("num_examples_train", 0),
+            {**train_results_prefixed, **val_results_prefixed}
+        )
 
     def evaluate(self, parameters, config):
-        """Evaluate parameters on the locally held test set."""
-
-        # Get config values
+        """
+        Evaluate parameters on the locally held test set.
+        This method is called by the server after fit to get validation metrics.
+        """
         batch_size: int = config["batch_size"]
-
-        # Initialize test_loss, test_accuracy
         test_loss = 0.0
         test_accuracy = 0.0
-        
-        metrics=None
-        
-        if self.model_type == "Tensorflow":
-            # Update local model with global parameters
-            self.model.set_weights(parameters)
-            
-            # Evaluate global model parameters on the local test data and return results
-            test_loss, test_accuracy = self.model.evaluate(x=self.x_test, y=self.y_test, batch_size=batch_size)
+        metrics = None
+        num_examples_test = 0
 
+        # ─────────────────────────────────────────────────
+        # 1. Tensorflow
+        # ─────────────────────────────────────────────────
+        if self.model_type == "Tensorflow":
+            self.model.set_weights(parameters)
+            test_loss, test_accuracy = self.model.evaluate(
+                x=self.x_test, y=self.y_test, batch_size=batch_size
+            )
             num_examples_test = len(self.x_test)
-            
-        elif self.model_type == "Pytorch":            
-            # Update local model parameters
+
+        # ─────────────────────────────────────────────────
+        # 2. Pytorch
+        # ─────────────────────────────────────────────────
+        elif self.model_type == "Pytorch":
             self.set_parameters(parameters)
-            
-            # Evaluate global model parameters on the local test data and return results
             test_loss, test_accuracy, metrics = self.test_torch(self.model, self.test_loader, self.cfg)
             num_examples_test = len(self.test_loader)
-        
+
+        # ─────────────────────────────────────────────────
+        # 3. Huggingface
+        # ─────────────────────────────────────────────────
         elif self.model_type == "Huggingface":
-            # 평가는 추후 실행
+            # 평가 생략
             test_loss = 0.0
             test_accuracy = 0.0
             num_examples_test = 1
-        
+
+        # ─────────────────────────────────────────────────
+        # 4. hyperparameter
+        # ─────────────────────────────────────────────────
         elif self.model_type == "hyperparameter":
             try:
-                # 디바이스 설정 (GPU 사용 가능 시 GPU로)
-                import torch
                 device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
                 self.device = device
-                
-                # self.train_loader.dataset의 크기를 확인
+
                 logger.info(f"[Client {self.client_name}] train_loader size: {len(self.train_loader.dataset)}")
 
-                # 1) 전달받은 파라미터를 local model에 세팅
                 self.set_parameters(parameters)
 
-                # 2) config에서 lr, batch_size, local_epochs 등을 추출
-                #    (필요하다면 기본값을 cfg에서 가져와도 됨)
-                self.lr = config.get("learning_rate", 0.001)
-                self.bs = config.get("batch_size", 32)
-                local_epochs = config.get("local_epochs", 1)
+                lr = config["learning_rate"]
+                bs = config["batch_size"]
+                local_epochs = config["local_epochs"]
 
-                # 3) 로컬 학습 진행
-                #    기존에는 self.train_subset을 썼지만, 아래처럼 train_loader.dataset 사용
+                # 실제로는 evaluate이지만, 현재 구조상
+                # hyperparameter 분기에서 "local_train"으로 테스트(?)를 하고 있음
                 loss = client_utils.local_train(
                     model=self.model,
                     train_subset=self.train_loader.dataset,
-                    lr=self.lr,
-                    batch_size=self.bs,
+                    lr=lr,
+                    batch_size=bs,
                     epochs=local_epochs,
                     device=self.device
                 )
 
-                # 4) 학습 후 모델 파라미터(NumPy 배열)를 다시 가져옴
+                # 업데이트된 파라미터
                 parameters_prime = self.get_parameters()
+                num_examples_test = len(self.train_loader.dataset)
 
-                # 학습에 사용된 데이터 개수 (Dataset 크기로 설정)
-                num_examples_train = len(self.train_loader.dataset)
+                metrics = {"loss": float(loss), "lr": float(lr), "batch_size": int(bs)}
 
-                # (선택) 로컬 모델 저장
-                import os
-                import torch
-                local_model_path = f"./local_model/{self.fl_task_id}/{self.model_name}_local_model_V{self.gl_model}.pth"
-                os.makedirs(os.path.dirname(local_model_path), exist_ok=True)
-                torch.save(self.model.state_dict(), local_model_path)
-
-                # fit 함수에서 반환될 metrics 구성
-                # (여기에 train_accuracy나 다른 지표를 넣어도 됨)
-                metrics = {
-                    "loss": float(loss),
-                    "lr": float(self.lr),
-                    "batch_size": int(self.bs)
-                }
-
-                # fit 함수 최종 반환 (parameters_prime, num_examples, dict형 metrics)
-                return parameters_prime, num_examples_train, metrics
+                # evaluate에서는 test_loss=loss, test_accuracy=0.0(임의)
+                test_loss = float(loss)
+                test_accuracy = 0.0
 
             except Exception as e:
-                # 예외 발생 시 로그 출력 (f-string으로 변경)
-                logger.error(f"[Client {self.client_name}] Exception in fit: {e}")
-                # 필요 시 예외 재발생 (raise)
+                logger.error(f"[Client {self.client_name}] Exception in evaluate (hyperparameter): {e}")
                 raise e
 
         else:
             raise ValueError("Unsupported model_type")
 
+        # W&B 로깅
         if self.wandb_use:
-            # wandb log
-            self.wandb_run.log({"test_loss": test_loss, "round": self.fl_round}, step=self.fl_round)  # loss
-            self.wandb_run.log({"test_accuracy": test_accuracy, "round": self.fl_round}, step=self.fl_round)  # acc
-            
-            if metrics!=None:
-                # Log other metrics dynamically
-                for metric_name, metric_value in metrics.items():
-                    self.wandb_run.log({metric_name: metric_value}, step=self.fl_round)
+            self.wandb_run.log({"test_loss": test_loss, "round": self.fl_round}, step=self.fl_round)
+            self.wandb_run.log({"test_accuracy": test_accuracy, "round": self.fl_round}, step=self.fl_round)
+            if metrics is not None:
+                for metric_name, metric_val in metrics.items():
+                    self.wandb_run.log({metric_name: metric_val}, step=self.fl_round)
 
-        # Test: model performance by round
-        # if metrics!=None:
-        #     test_result = {"fl_task_id": self.fl_task_id, "client_mac": self.client_mac, "client_name": self.client_name, "round": self.fl_round,
-        #                 "test_loss": test_loss, "test_accuracy": test_accuracy, **metrics, "gl_model_v": self.gl_model}
-        # else:
-        #     test_result = {"fl_task_id": self.fl_task_id, "client_mac": self.client_mac, "client_name": self.client_name, "round": self.fl_round,
-        #                 "test_loss": test_loss, "test_accuracy": test_accuracy, "gl_model_v": self.gl_model}
-        test_result = {"fl_task_id": self.fl_task_id, "client_mac": self.client_mac, "client_name": self.client_name, "round": self.fl_round,
-                         "test_loss": test_loss, "test_accuracy": test_accuracy, "gl_model_v": self.gl_model, 'wandb_name': self.wandb_name}
+        test_result = {
+            "fl_task_id": self.fl_task_id,
+            "client_mac": self.client_mac,
+            "client_name": self.client_name,
+            "round": self.fl_round,
+            "test_loss": test_loss,
+            "test_accuracy": test_accuracy,
+            "gl_model_v": self.gl_model,
+            "wandb_name": self.wandb_name
+        }
+        if metrics is not None:
+            test_result.update(metrics)
+
         json_result = json.dumps(test_result)
         logger.info(f'test - {json_result}')
 
-        # send test_result to client_performance pod
         client_api.ClientServerAPI(self.fl_task_id).put_test_result(json_result)
-
-        # increase next round
         self.fl_round += 1
 
-        if metrics!=None:
+        if metrics is not None:
+            # accuracy= test_accuracy, + metrics
             return test_loss, num_examples_test, {"accuracy": test_accuracy, **metrics}
         else:
             return test_loss, num_examples_test, {"accuracy": test_accuracy}
 
 
 def flower_client_start(FL_server_IP, client):
-    client_start = partial(fl.client.start_numpy_client, server_address=FL_server_IP, client=client)
+    """
+    Wrapper partial function for starting the flwr client.
+    """
+    client_start = partial(
+        fl.client.start_numpy_client,
+        server_address=FL_server_IP,
+        client=client
+    )
     return client_start
