@@ -60,6 +60,13 @@ class FLClientTask():
             self.finetune_llm = fl_task["finetune_llm"]
             self.data_collator = fl_task["data_collator"]
             self.formatting_prompts_func = fl_task["formatting_prompts_func"]
+        
+        elif self.model_type == "hyperparameter":
+            self.train_loader = fl_task["train_loader"]
+            self.val_loader = fl_task["val_loader"]
+            self.test_loader = fl_task["test_loader"]
+            self.train_torch = fl_task["train_torch"]
+            self.test_torch = fl_task["test_torch"]
                     
 
     async def fl_client_start(self):

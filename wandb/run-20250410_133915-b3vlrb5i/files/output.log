@@ -1,0 +1,415 @@
+--- Logging error ---
+Traceback (most recent call last):
+  File "/home/ccl/safer/FedOps/MNIST/app.py", line 135, in fl_client_start
+    train_loader=self.train_loader, val_loader=self.val_loader, test_loader=self.test_loader,
+                ^^^^^^^^^^^^^^^^^
+AttributeError: 'FLClientTask' object has no attribute 'train_loader'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/home/ccl/anaconda3/envs/fedops_hyp/lib/python3.11/logging/__init__.py", line 1110, in emit
+    msg = self.format(record)
+          ^^^^^^^^^^^^^^^^^^^
+  File "/home/ccl/anaconda3/envs/fedops_hyp/lib/python3.11/logging/__init__.py", line 953, in format
+    return fmt.format(record)
+           ^^^^^^^^^^^^^^^^^^
+  File "/home/ccl/anaconda3/envs/fedops_hyp/lib/python3.11/logging/__init__.py", line 687, in format
+    record.message = record.getMessage()
+                     ^^^^^^^^^^^^^^^^^^^
+  File "/home/ccl/anaconda3/envs/fedops_hyp/lib/python3.11/logging/__init__.py", line 377, in getMessage
+    msg = msg % self.args
+          ~~~~^~~~~~~~~~~
+TypeError: not all arguments converted during string formatting
+Call stack:
+  File "/home/ccl/safer/FedOps/MNIST/client_main.py", line 82, in <module>
+    main()
+  File "/home/ccl/anaconda3/envs/fedops_hyp/lib/python3.11/site-packages/hydra/main.py", line 94, in decorated_main
+    _run_hydra(
+  File "/home/ccl/anaconda3/envs/fedops_hyp/lib/python3.11/site-packages/hydra/_internal/utils.py", line 394, in _run_hydra
+    _run_app(
+  File "/home/ccl/anaconda3/envs/fedops_hyp/lib/python3.11/site-packages/hydra/_internal/utils.py", line 457, in _run_app
+    run_and_report(
+  File "/home/ccl/anaconda3/envs/fedops_hyp/lib/python3.11/site-packages/hydra/_internal/utils.py", line 220, in run_and_report
+    return func()
+  File "/home/ccl/anaconda3/envs/fedops_hyp/lib/python3.11/site-packages/hydra/_internal/utils.py", line 458, in <lambda>
+    lambda: hydra.run(
+  File "/home/ccl/anaconda3/envs/fedops_hyp/lib/python3.11/site-packages/hydra/_internal/hydra.py", line 119, in run
+    ret = run_job(
+  File "/home/ccl/anaconda3/envs/fedops_hyp/lib/python3.11/site-packages/hydra/core/utils.py", line 186, in run_job
+    ret.return_value = task_function(task_cfg)
+  File "/home/ccl/safer/FedOps/MNIST/client_main.py", line 78, in main
+    fl_client.start()
+  File "/home/ccl/safer/FedOps/MNIST/app.py", line 230, in start
+    uvicorn.run(self.app, host='0.0.0.0', port=self.client_port)
+  File "/home/ccl/anaconda3/envs/fedops_hyp/lib/python3.11/site-packages/uvicorn/main.py", line 579, in run
+    server.run()
+  File "/home/ccl/anaconda3/envs/fedops_hyp/lib/python3.11/site-packages/uvicorn/server.py", line 66, in run
+    return asyncio.run(self.serve(sockets=sockets))
+  File "/home/ccl/anaconda3/envs/fedops_hyp/lib/python3.11/asyncio/runners.py", line 190, in run
+    return runner.run(main)
+  File "/home/ccl/anaconda3/envs/fedops_hyp/lib/python3.11/asyncio/runners.py", line 118, in run
+    return self._loop.run_until_complete(task)
+  File "/home/ccl/anaconda3/envs/fedops_hyp/lib/python3.11/site-packages/uvicorn/protocols/http/httptools_impl.py", line 409, in run_asgi
+    result = await app(  # type: ignore[func-returns-value]
+  File "/home/ccl/anaconda3/envs/fedops_hyp/lib/python3.11/site-packages/uvicorn/middleware/proxy_headers.py", line 60, in __call__
+    return await self.app(scope, receive, send)
+  File "/home/ccl/anaconda3/envs/fedops_hyp/lib/python3.11/site-packages/fastapi/applications.py", line 1054, in __call__
+    await super().__call__(scope, receive, send)
+  File "/home/ccl/anaconda3/envs/fedops_hyp/lib/python3.11/site-packages/starlette/applications.py", line 112, in __call__
+    await self.middleware_stack(scope, receive, send)
+  File "/home/ccl/anaconda3/envs/fedops_hyp/lib/python3.11/site-packages/starlette/middleware/errors.py", line 165, in __call__
+    await self.app(scope, receive, _send)
+  File "/home/ccl/anaconda3/envs/fedops_hyp/lib/python3.11/site-packages/starlette/middleware/exceptions.py", line 62, in __call__
+    await wrap_app_handling_exceptions(self.app, conn)(scope, receive, send)
+  File "/home/ccl/anaconda3/envs/fedops_hyp/lib/python3.11/site-packages/starlette/_exception_handler.py", line 42, in wrapped_app
+    await app(scope, receive, sender)
+  File "/home/ccl/anaconda3/envs/fedops_hyp/lib/python3.11/site-packages/starlette/routing.py", line 714, in __call__
+    await self.middleware_stack(scope, receive, send)
+  File "/home/ccl/anaconda3/envs/fedops_hyp/lib/python3.11/site-packages/starlette/routing.py", line 734, in app
+    await route.handle(scope, receive, send)
+  File "/home/ccl/anaconda3/envs/fedops_hyp/lib/python3.11/site-packages/starlette/routing.py", line 288, in handle
+    await self.app(scope, receive, send)
+  File "/home/ccl/anaconda3/envs/fedops_hyp/lib/python3.11/site-packages/starlette/routing.py", line 76, in app
+    await wrap_app_handling_exceptions(app, request)(scope, receive, send)
+  File "/home/ccl/anaconda3/envs/fedops_hyp/lib/python3.11/site-packages/starlette/_exception_handler.py", line 42, in wrapped_app
+    await app(scope, receive, sender)
+  File "/home/ccl/anaconda3/envs/fedops_hyp/lib/python3.11/site-packages/starlette/routing.py", line 74, in app
+    await response(scope, receive, send)
+  File "/home/ccl/anaconda3/envs/fedops_hyp/lib/python3.11/site-packages/starlette/responses.py", line 160, in __call__
+    await self.background()
+  File "/home/ccl/anaconda3/envs/fedops_hyp/lib/python3.11/site-packages/starlette/background.py", line 41, in __call__
+    await task()
+  File "/home/ccl/anaconda3/envs/fedops_hyp/lib/python3.11/site-packages/starlette/background.py", line 26, in __call__
+    await self.func(*self.args, **self.kwargs)
+  File "/home/ccl/safer/FedOps/MNIST/app.py", line 187, in fl_client_start
+    logging.info('[E][PC0002] learning', e)
+Message: '[E][PC0002] learning'
+Arguments: (AttributeError("'FLClientTask' object has no attribute 'train_loader'"),)
+--- Logging error ---
+Traceback (most recent call last):
+  File "/home/ccl/safer/FedOps/MNIST/app.py", line 135, in fl_client_start
+    train_loader=self.train_loader, val_loader=self.val_loader, test_loader=self.test_loader,
+                ^^^^^^^^^^^^^^^^^
+AttributeError: 'FLClientTask' object has no attribute 'train_loader'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/home/ccl/anaconda3/envs/fedops_hyp/lib/python3.11/logging/__init__.py", line 1110, in emit
+    msg = self.format(record)
+          ^^^^^^^^^^^^^^^^^^^
+  File "/home/ccl/anaconda3/envs/fedops_hyp/lib/python3.11/logging/__init__.py", line 953, in format
+    return fmt.format(record)
+           ^^^^^^^^^^^^^^^^^^
+  File "/home/ccl/anaconda3/envs/fedops_hyp/lib/python3.11/logging/__init__.py", line 687, in format
+    record.message = record.getMessage()
+                     ^^^^^^^^^^^^^^^^^^^
+  File "/home/ccl/anaconda3/envs/fedops_hyp/lib/python3.11/logging/__init__.py", line 377, in getMessage
+    msg = msg % self.args
+          ~~~~^~~~~~~~~~~
+TypeError: not all arguments converted during string formatting
+Call stack:
+  File "/home/ccl/safer/FedOps/MNIST/client_main.py", line 82, in <module>
+    main()
+  File "/home/ccl/anaconda3/envs/fedops_hyp/lib/python3.11/site-packages/hydra/main.py", line 94, in decorated_main
+    _run_hydra(
+  File "/home/ccl/anaconda3/envs/fedops_hyp/lib/python3.11/site-packages/hydra/_internal/utils.py", line 394, in _run_hydra
+    _run_app(
+  File "/home/ccl/anaconda3/envs/fedops_hyp/lib/python3.11/site-packages/hydra/_internal/utils.py", line 457, in _run_app
+    run_and_report(
+  File "/home/ccl/anaconda3/envs/fedops_hyp/lib/python3.11/site-packages/hydra/_internal/utils.py", line 220, in run_and_report
+    return func()
+  File "/home/ccl/anaconda3/envs/fedops_hyp/lib/python3.11/site-packages/hydra/_internal/utils.py", line 458, in <lambda>
+    lambda: hydra.run(
+  File "/home/ccl/anaconda3/envs/fedops_hyp/lib/python3.11/site-packages/hydra/_internal/hydra.py", line 119, in run
+    ret = run_job(
+  File "/home/ccl/anaconda3/envs/fedops_hyp/lib/python3.11/site-packages/hydra/core/utils.py", line 186, in run_job
+    ret.return_value = task_function(task_cfg)
+  File "/home/ccl/safer/FedOps/MNIST/client_main.py", line 78, in main
+    fl_client.start()
+  File "/home/ccl/safer/FedOps/MNIST/app.py", line 230, in start
+    uvicorn.run(self.app, host='0.0.0.0', port=self.client_port)
+  File "/home/ccl/anaconda3/envs/fedops_hyp/lib/python3.11/site-packages/uvicorn/main.py", line 579, in run
+    server.run()
+  File "/home/ccl/anaconda3/envs/fedops_hyp/lib/python3.11/site-packages/uvicorn/server.py", line 66, in run
+    return asyncio.run(self.serve(sockets=sockets))
+  File "/home/ccl/anaconda3/envs/fedops_hyp/lib/python3.11/asyncio/runners.py", line 190, in run
+    return runner.run(main)
+  File "/home/ccl/anaconda3/envs/fedops_hyp/lib/python3.11/asyncio/runners.py", line 118, in run
+    return self._loop.run_until_complete(task)
+  File "/home/ccl/anaconda3/envs/fedops_hyp/lib/python3.11/site-packages/uvicorn/protocols/http/httptools_impl.py", line 409, in run_asgi
+    result = await app(  # type: ignore[func-returns-value]
+  File "/home/ccl/anaconda3/envs/fedops_hyp/lib/python3.11/site-packages/uvicorn/middleware/proxy_headers.py", line 60, in __call__
+    return await self.app(scope, receive, send)
+  File "/home/ccl/anaconda3/envs/fedops_hyp/lib/python3.11/site-packages/fastapi/applications.py", line 1054, in __call__
+    await super().__call__(scope, receive, send)
+  File "/home/ccl/anaconda3/envs/fedops_hyp/lib/python3.11/site-packages/starlette/applications.py", line 112, in __call__
+    await self.middleware_stack(scope, receive, send)
+  File "/home/ccl/anaconda3/envs/fedops_hyp/lib/python3.11/site-packages/starlette/middleware/errors.py", line 165, in __call__
+    await self.app(scope, receive, _send)
+  File "/home/ccl/anaconda3/envs/fedops_hyp/lib/python3.11/site-packages/starlette/middleware/exceptions.py", line 62, in __call__
+    await wrap_app_handling_exceptions(self.app, conn)(scope, receive, send)
+  File "/home/ccl/anaconda3/envs/fedops_hyp/lib/python3.11/site-packages/starlette/_exception_handler.py", line 42, in wrapped_app
+    await app(scope, receive, sender)
+  File "/home/ccl/anaconda3/envs/fedops_hyp/lib/python3.11/site-packages/starlette/routing.py", line 714, in __call__
+    await self.middleware_stack(scope, receive, send)
+  File "/home/ccl/anaconda3/envs/fedops_hyp/lib/python3.11/site-packages/starlette/routing.py", line 734, in app
+    await route.handle(scope, receive, send)
+  File "/home/ccl/anaconda3/envs/fedops_hyp/lib/python3.11/site-packages/starlette/routing.py", line 288, in handle
+    await self.app(scope, receive, send)
+  File "/home/ccl/anaconda3/envs/fedops_hyp/lib/python3.11/site-packages/starlette/routing.py", line 76, in app
+    await wrap_app_handling_exceptions(app, request)(scope, receive, send)
+  File "/home/ccl/anaconda3/envs/fedops_hyp/lib/python3.11/site-packages/starlette/_exception_handler.py", line 42, in wrapped_app
+    await app(scope, receive, sender)
+  File "/home/ccl/anaconda3/envs/fedops_hyp/lib/python3.11/site-packages/starlette/routing.py", line 74, in app
+    await response(scope, receive, send)
+  File "/home/ccl/anaconda3/envs/fedops_hyp/lib/python3.11/site-packages/starlette/responses.py", line 160, in __call__
+    await self.background()
+  File "/home/ccl/anaconda3/envs/fedops_hyp/lib/python3.11/site-packages/starlette/background.py", line 41, in __call__
+    await task()
+  File "/home/ccl/anaconda3/envs/fedops_hyp/lib/python3.11/site-packages/starlette/background.py", line 26, in __call__
+    await self.func(*self.args, **self.kwargs)
+  File "/home/ccl/safer/FedOps/MNIST/app.py", line 187, in fl_client_start
+    logging.info('[E][PC0002] learning', e)
+Message: '[E][PC0002] learning'
+Arguments: (AttributeError("'FLClientTask' object has no attribute 'train_loader'"),)
+[2025-04-10 13:39:16,585][root][INFO] - notify_fail start
+[2025-04-10 13:39:16,604][root][ERROR] - trainFin
+[31mERROR[0m:    Exception in ASGI application
+Traceback (most recent call last):
+  File "/home/ccl/anaconda3/envs/fedops_hyp/lib/python3.11/site-packages/uvicorn/protocols/http/httptools_impl.py", line 409, in run_asgi
+    result = await app(  # type: ignore[func-returns-value]
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/ccl/anaconda3/envs/fedops_hyp/lib/python3.11/site-packages/uvicorn/middleware/proxy_headers.py", line 60, in __call__
+    return await self.app(scope, receive, send)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/ccl/anaconda3/envs/fedops_hyp/lib/python3.11/site-packages/fastapi/applications.py", line 1054, in __call__
+    await super().__call__(scope, receive, send)
+  File "/home/ccl/anaconda3/envs/fedops_hyp/lib/python3.11/site-packages/starlette/applications.py", line 112, in __call__
+    await self.middleware_stack(scope, receive, send)
+  File "/home/ccl/anaconda3/envs/fedops_hyp/lib/python3.11/site-packages/starlette/middleware/errors.py", line 187, in __call__
+    raise exc
+  File "/home/ccl/anaconda3/envs/fedops_hyp/lib/python3.11/site-packages/starlette/middleware/errors.py", line 165, in __call__
+    await self.app(scope, receive, _send)
+  File "/home/ccl/anaconda3/envs/fedops_hyp/lib/python3.11/site-packages/starlette/middleware/exceptions.py", line 62, in __call__
+    await wrap_app_handling_exceptions(self.app, conn)(scope, receive, send)
+  File "/home/ccl/anaconda3/envs/fedops_hyp/lib/python3.11/site-packages/starlette/_exception_handler.py", line 53, in wrapped_app
+    raise exc
+  File "/home/ccl/anaconda3/envs/fedops_hyp/lib/python3.11/site-packages/starlette/_exception_handler.py", line 42, in wrapped_app
+    await app(scope, receive, sender)
+  File "/home/ccl/anaconda3/envs/fedops_hyp/lib/python3.11/site-packages/starlette/routing.py", line 714, in __call__
+    await self.middleware_stack(scope, receive, send)
+  File "/home/ccl/anaconda3/envs/fedops_hyp/lib/python3.11/site-packages/starlette/routing.py", line 734, in app
+    await route.handle(scope, receive, send)
+  File "/home/ccl/anaconda3/envs/fedops_hyp/lib/python3.11/site-packages/starlette/routing.py", line 288, in handle
+    await self.app(scope, receive, send)
+  File "/home/ccl/anaconda3/envs/fedops_hyp/lib/python3.11/site-packages/starlette/routing.py", line 76, in app
+    await wrap_app_handling_exceptions(app, request)(scope, receive, send)
+  File "/home/ccl/anaconda3/envs/fedops_hyp/lib/python3.11/site-packages/starlette/_exception_handler.py", line 53, in wrapped_app
+    raise exc
+  File "/home/ccl/anaconda3/envs/fedops_hyp/lib/python3.11/site-packages/starlette/_exception_handler.py", line 42, in wrapped_app
+    await app(scope, receive, sender)
+  File "/home/ccl/anaconda3/envs/fedops_hyp/lib/python3.11/site-packages/starlette/routing.py", line 74, in app
+    await response(scope, receive, send)
+  File "/home/ccl/anaconda3/envs/fedops_hyp/lib/python3.11/site-packages/starlette/responses.py", line 160, in __call__
+    await self.background()
+  File "/home/ccl/anaconda3/envs/fedops_hyp/lib/python3.11/site-packages/starlette/background.py", line 41, in __call__
+    await task()
+  File "/home/ccl/anaconda3/envs/fedops_hyp/lib/python3.11/site-packages/starlette/background.py", line 26, in __call__
+    await self.func(*self.args, **self.kwargs)
+  File "/home/ccl/safer/FedOps/MNIST/app.py", line 190, in fl_client_start
+    raise e
+  File "/home/ccl/safer/FedOps/MNIST/app.py", line 135, in fl_client_start
+    train_loader=self.train_loader, val_loader=self.val_loader, test_loader=self.test_loader,
+                ^^^^^^^^^^^^^^^^^
+AttributeError: 'FLClientTask' object has no attribute 'train_loader'
+[32mINFO[0m:     127.0.0.1:51282 - "[1mGET /online HTTP/1.1[0m" [32m200 OK[0m
+[32mINFO[0m:     127.0.0.1:51296 - "[1mGET /online HTTP/1.1[0m" [32m200 OK[0m
+[32mINFO[0m:     127.0.0.1:54420 - "[1mGET /online HTTP/1.1[0m" [32m200 OK[0m
+[32mINFO[0m:     127.0.0.1:43618 - "[1mGET /online HTTP/1.1[0m" [32m200 OK[0m
+[32mINFO[0m:     127.0.0.1:43620 - "[1mGET /online HTTP/1.1[0m" [32m200 OK[0m
+[32mINFO[0m:     127.0.0.1:49906 - "[1mGET /online HTTP/1.1[0m" [32m200 OK[0m
+[32mINFO[0m:     127.0.0.1:39246 - "[1mGET /online HTTP/1.1[0m" [32m200 OK[0m
+[32mINFO[0m:     127.0.0.1:39256 - "[1mGET /online HTTP/1.1[0m" [32m200 OK[0m
+[32mINFO[0m:     127.0.0.1:38972 - "[1mGET /online HTTP/1.1[0m" [32m200 OK[0m
+[32mINFO[0m:     127.0.0.1:57906 - "[1mGET /online HTTP/1.1[0m" [32m200 OK[0m
+[32mINFO[0m:     127.0.0.1:57914 - "[1mGET /online HTTP/1.1[0m" [32m200 OK[0m
+[32mINFO[0m:     127.0.0.1:36664 - "[1mGET /online HTTP/1.1[0m" [32m200 OK[0m
+[32mINFO[0m:     127.0.0.1:49684 - "[1mGET /online HTTP/1.1[0m" [32m200 OK[0m
+[32mINFO[0m:     127.0.0.1:49686 - "[1mGET /online HTTP/1.1[0m" [32m200 OK[0m
+[32mINFO[0m:     127.0.0.1:57464 - "[1mGET /online HTTP/1.1[0m" [32m200 OK[0m
+[32mINFO[0m:     127.0.0.1:57476 - "[1mGET /online HTTP/1.1[0m" [32m200 OK[0m
+[32mINFO[0m:     127.0.0.1:55112 - "[1mGET /online HTTP/1.1[0m" [32m200 OK[0m
+[32mINFO[0m:     127.0.0.1:37446 - "[1mGET /online HTTP/1.1[0m" [32m200 OK[0m
+[32mINFO[0m:     127.0.0.1:37460 - "[1mGET /online HTTP/1.1[0m" [32m200 OK[0m
+[32mINFO[0m:     127.0.0.1:46316 - "[1mGET /online HTTP/1.1[0m" [32m200 OK[0m
+[32mINFO[0m:     127.0.0.1:46396 - "[1mGET /online HTTP/1.1[0m" [32m200 OK[0m
+[32mINFO[0m:     127.0.0.1:46408 - "[1mGET /online HTTP/1.1[0m" [32m200 OK[0m
+[32mINFO[0m:     127.0.0.1:58036 - "[1mGET /online HTTP/1.1[0m" [32m200 OK[0m
+[32mINFO[0m:     127.0.0.1:46236 - "[1mGET /online HTTP/1.1[0m" [32m200 OK[0m
+[32mINFO[0m:     127.0.0.1:46242 - "[1mGET /online HTTP/1.1[0m" [32m200 OK[0m
+[32mINFO[0m:     127.0.0.1:57654 - "[1mGET /online HTTP/1.1[0m" [32m200 OK[0m
+[32mINFO[0m:     127.0.0.1:58254 - "[1mGET /online HTTP/1.1[0m" [32m200 OK[0m
+[32mINFO[0m:     127.0.0.1:58270 - "[1mGET /online HTTP/1.1[0m" [32m200 OK[0m
+[32mINFO[0m:     127.0.0.1:59070 - "[1mGET /online HTTP/1.1[0m" [32m200 OK[0m
+[32mINFO[0m:     127.0.0.1:52772 - "[1mGET /online HTTP/1.1[0m" [32m200 OK[0m
+[32mINFO[0m:     127.0.0.1:52774 - "[1mGET /online HTTP/1.1[0m" [32m200 OK[0m
+[32mINFO[0m:     127.0.0.1:49934 - "[1mGET /online HTTP/1.1[0m" [32m200 OK[0m
+[32mINFO[0m:     127.0.0.1:52878 - "[1mGET /online HTTP/1.1[0m" [32m200 OK[0m
+[32mINFO[0m:     127.0.0.1:52894 - "[1mGET /online HTTP/1.1[0m" [32m200 OK[0m
+[32mINFO[0m:     127.0.0.1:36312 - "[1mGET /online HTTP/1.1[0m" [32m200 OK[0m
+[32mINFO[0m:     127.0.0.1:52718 - "[1mGET /online HTTP/1.1[0m" [32m200 OK[0m
+[32mINFO[0m:     127.0.0.1:52728 - "[1mGET /online HTTP/1.1[0m" [32m200 OK[0m
+[32mINFO[0m:     127.0.0.1:48732 - "[1mGET /online HTTP/1.1[0m" [32m200 OK[0m
+[32mINFO[0m:     127.0.0.1:48746 - "[1mGET /online HTTP/1.1[0m" [32m200 OK[0m
+[32mINFO[0m:     127.0.0.1:52992 - "[1mGET /online HTTP/1.1[0m" [32m200 OK[0m
+[32mINFO[0m:     127.0.0.1:36660 - "[1mGET /online HTTP/1.1[0m" [32m200 OK[0m
+[32mINFO[0m:     127.0.0.1:36670 - "[1mGET /online HTTP/1.1[0m" [32m200 OK[0m
+[32mINFO[0m:     127.0.0.1:35326 - "[1mGET /online HTTP/1.1[0m" [32m200 OK[0m
+[32mINFO[0m:     127.0.0.1:39854 - "[1mGET /online HTTP/1.1[0m" [32m200 OK[0m
+[32mINFO[0m:     127.0.0.1:39868 - "[1mGET /online HTTP/1.1[0m" [32m200 OK[0m
+[32mINFO[0m:     127.0.0.1:36512 - "[1mGET /online HTTP/1.1[0m" [32m200 OK[0m
+[32mINFO[0m:     127.0.0.1:56018 - "[1mGET /online HTTP/1.1[0m" [32m200 OK[0m
+[32mINFO[0m:     127.0.0.1:56022 - "[1mGET /online HTTP/1.1[0m" [32m200 OK[0m
+[32mINFO[0m:     127.0.0.1:47578 - "[1mGET /online HTTP/1.1[0m" [32m200 OK[0m
+[32mINFO[0m:     127.0.0.1:56088 - "[1mGET /online HTTP/1.1[0m" [32m200 OK[0m
+[32mINFO[0m:     127.0.0.1:56100 - "[1mGET /online HTTP/1.1[0m" [32m200 OK[0m
+[32mINFO[0m:     127.0.0.1:53770 - "[1mGET /online HTTP/1.1[0m" [32m200 OK[0m
+[32mINFO[0m:     127.0.0.1:37486 - "[1mGET /online HTTP/1.1[0m" [32m200 OK[0m
+[32mINFO[0m:     127.0.0.1:37488 - "[1mGET /online HTTP/1.1[0m" [32m200 OK[0m
+[32mINFO[0m:     127.0.0.1:60434 - "[1mGET /online HTTP/1.1[0m" [32m200 OK[0m
+[32mINFO[0m:     127.0.0.1:56232 - "[1mGET /online HTTP/1.1[0m" [32m200 OK[0m
+[32mINFO[0m:     127.0.0.1:56242 - "[1mGET /online HTTP/1.1[0m" [32m200 OK[0m
+[32mINFO[0m:     127.0.0.1:45838 - "[1mGET /online HTTP/1.1[0m" [32m200 OK[0m
+[32mINFO[0m:     127.0.0.1:43310 - "[1mGET /online HTTP/1.1[0m" [32m200 OK[0m
+[32mINFO[0m:     127.0.0.1:43320 - "[1mGET /online HTTP/1.1[0m" [32m200 OK[0m
+[32mINFO[0m:     127.0.0.1:57202 - "[1mGET /online HTTP/1.1[0m" [32m200 OK[0m
+[32mINFO[0m:     127.0.0.1:57206 - "[1mGET /online HTTP/1.1[0m" [32m200 OK[0m
+[32mINFO[0m:     127.0.0.1:53502 - "[1mGET /online HTTP/1.1[0m" [32m200 OK[0m
+[32mINFO[0m:     127.0.0.1:46688 - "[1mGET /online HTTP/1.1[0m" [32m200 OK[0m
+[32mINFO[0m:     127.0.0.1:46698 - "[1mGET /online HTTP/1.1[0m" [32m200 OK[0m
+[32mINFO[0m:     127.0.0.1:53692 - "[1mGET /online HTTP/1.1[0m" [32m200 OK[0m
+[32mINFO[0m:     127.0.0.1:54732 - "[1mGET /online HTTP/1.1[0m" [32m200 OK[0m
+[32mINFO[0m:     127.0.0.1:54734 - "[1mGET /online HTTP/1.1[0m" [32m200 OK[0m
+[32mINFO[0m:     127.0.0.1:41254 - "[1mGET /online HTTP/1.1[0m" [32m200 OK[0m
+[32mINFO[0m:     127.0.0.1:56118 - "[1mGET /online HTTP/1.1[0m" [32m200 OK[0m
+[32mINFO[0m:     127.0.0.1:56122 - "[1mGET /online HTTP/1.1[0m" [32m200 OK[0m
+[32mINFO[0m:     127.0.0.1:53864 - "[1mGET /online HTTP/1.1[0m" [32m200 OK[0m
+[32mINFO[0m:     127.0.0.1:39684 - "[1mGET /online HTTP/1.1[0m" [32m200 OK[0m
+[32mINFO[0m:     127.0.0.1:39686 - "[1mGET /online HTTP/1.1[0m" [32m200 OK[0m
+[32mINFO[0m:     127.0.0.1:38826 - "[1mGET /online HTTP/1.1[0m" [32m200 OK[0m
+[32mINFO[0m:     127.0.0.1:49166 - "[1mGET /online HTTP/1.1[0m" [32m200 OK[0m
+[32mINFO[0m:     127.0.0.1:49168 - "[1mGET /online HTTP/1.1[0m" [32m200 OK[0m
+[32mINFO[0m:     127.0.0.1:46264 - "[1mGET /online HTTP/1.1[0m" [32m200 OK[0m
+[32mINFO[0m:     127.0.0.1:57820 - "[1mGET /online HTTP/1.1[0m" [32m200 OK[0m
+[32mINFO[0m:     127.0.0.1:57830 - "[1mGET /online HTTP/1.1[0m" [32m200 OK[0m
+[32mINFO[0m:     127.0.0.1:38506 - "[1mGET /online HTTP/1.1[0m" [32m200 OK[0m
+[32mINFO[0m:     127.0.0.1:59044 - "[1mGET /online HTTP/1.1[0m" [32m200 OK[0m
+[32mINFO[0m:     127.0.0.1:59054 - "[1mGET /online HTTP/1.1[0m" [32m200 OK[0m
+[32mINFO[0m:     127.0.0.1:47352 - "[1mGET /online HTTP/1.1[0m" [32m200 OK[0m
+[32mINFO[0m:     127.0.0.1:47354 - "[1mGET /online HTTP/1.1[0m" [32m200 OK[0m
+[32mINFO[0m:     127.0.0.1:57890 - "[1mGET /online HTTP/1.1[0m" [32m200 OK[0m
+[32mINFO[0m:     127.0.0.1:58076 - "[1mGET /online HTTP/1.1[0m" [32m200 OK[0m
+[32mINFO[0m:     127.0.0.1:58086 - "[1mGET /online HTTP/1.1[0m" [32m200 OK[0m
+[32mINFO[0m:     127.0.0.1:55692 - "[1mGET /online HTTP/1.1[0m" [32m200 OK[0m
+[32mINFO[0m:     127.0.0.1:48242 - "[1mGET /online HTTP/1.1[0m" [32m200 OK[0m
+[32mINFO[0m:     127.0.0.1:48258 - "[1mGET /online HTTP/1.1[0m" [32m200 OK[0m
+[32mINFO[0m:     127.0.0.1:44964 - "[1mGET /online HTTP/1.1[0m" [32m200 OK[0m
+[32mINFO[0m:     127.0.0.1:60746 - "[1mGET /online HTTP/1.1[0m" [32m200 OK[0m
+[32mINFO[0m:     127.0.0.1:60752 - "[1mGET /online HTTP/1.1[0m" [32m200 OK[0m
+[32mINFO[0m:     127.0.0.1:45428 - "[1mGET /online HTTP/1.1[0m" [32m200 OK[0m
+[32mINFO[0m:     127.0.0.1:56424 - "[1mGET /online HTTP/1.1[0m" [32m200 OK[0m
+[32mINFO[0m:     127.0.0.1:56438 - "[1mGET /online HTTP/1.1[0m" [32m200 OK[0m
+[32mINFO[0m:     127.0.0.1:59192 - "[1mGET /online HTTP/1.1[0m" [32m200 OK[0m
+[32mINFO[0m:     127.0.0.1:48358 - "[1mGET /online HTTP/1.1[0m" [32m200 OK[0m
+[32mINFO[0m:     127.0.0.1:48372 - "[1mGET /online HTTP/1.1[0m" [32m200 OK[0m
+[32mINFO[0m:     127.0.0.1:38512 - "[1mGET /online HTTP/1.1[0m" [32m200 OK[0m
+[32mINFO[0m:     127.0.0.1:45614 - "[1mGET /online HTTP/1.1[0m" [32m200 OK[0m
+[32mINFO[0m:     127.0.0.1:45616 - "[1mGET /online HTTP/1.1[0m" [32m200 OK[0m
+[32mINFO[0m:     127.0.0.1:48746 - "[1mGET /online HTTP/1.1[0m" [32m200 OK[0m
+[32mINFO[0m:     127.0.0.1:55142 - "[1mGET /online HTTP/1.1[0m" [32m200 OK[0m
+[32mINFO[0m:     127.0.0.1:55144 - "[1mGET /online HTTP/1.1[0m" [32m200 OK[0m
+[32mINFO[0m:     127.0.0.1:47506 - "[1mGET /online HTTP/1.1[0m" [32m200 OK[0m
+[32mINFO[0m:     127.0.0.1:47522 - "[1mGET /online HTTP/1.1[0m" [32m200 OK[0m
+[32mINFO[0m:     127.0.0.1:56902 - "[1mGET /online HTTP/1.1[0m" [32m200 OK[0m
+[32mINFO[0m:     127.0.0.1:47234 - "[1mGET /online HTTP/1.1[0m" [32m200 OK[0m
+[32mINFO[0m:     127.0.0.1:47240 - "[1mGET /online HTTP/1.1[0m" [32m200 OK[0m
+[32mINFO[0m:     127.0.0.1:46302 - "[1mGET /online HTTP/1.1[0m" [32m200 OK[0m
+[32mINFO[0m:     127.0.0.1:55256 - "[1mGET /online HTTP/1.1[0m" [32m200 OK[0m
+[32mINFO[0m:     127.0.0.1:55266 - "[1mGET /online HTTP/1.1[0m" [32m200 OK[0m
+[32mINFO[0m:     127.0.0.1:37616 - "[1mGET /online HTTP/1.1[0m" [32m200 OK[0m
+[32mINFO[0m:     127.0.0.1:44786 - "[1mGET /online HTTP/1.1[0m" [32m200 OK[0m
+[32mINFO[0m:     127.0.0.1:44796 - "[1mGET /online HTTP/1.1[0m" [32m200 OK[0m
+[32mINFO[0m:     127.0.0.1:58460 - "[1mGET /online HTTP/1.1[0m" [32m200 OK[0m
+[32mINFO[0m:     127.0.0.1:46640 - "[1mGET /online HTTP/1.1[0m" [32m200 OK[0m
+[32mINFO[0m:     127.0.0.1:46646 - "[1mGET /online HTTP/1.1[0m" [32m200 OK[0m
+[32mINFO[0m:     127.0.0.1:49066 - "[1mGET /online HTTP/1.1[0m" [32m200 OK[0m
+[32mINFO[0m:     127.0.0.1:57760 - "[1mGET /online HTTP/1.1[0m" [32m200 OK[0m
+[32mINFO[0m:     127.0.0.1:57770 - "[1mGET /online HTTP/1.1[0m" [32m200 OK[0m
+[32mINFO[0m:     127.0.0.1:50044 - "[1mGET /online HTTP/1.1[0m" [32m200 OK[0m
+[32mINFO[0m:     127.0.0.1:44996 - "[1mGET /online HTTP/1.1[0m" [32m200 OK[0m
+[32mINFO[0m:     127.0.0.1:45000 - "[1mGET /online HTTP/1.1[0m" [32m200 OK[0m
+[32mINFO[0m:     127.0.0.1:39612 - "[1mGET /online HTTP/1.1[0m" [32m200 OK[0m
+[32mINFO[0m:     127.0.0.1:55180 - "[1mGET /online HTTP/1.1[0m" [32m200 OK[0m
+[32mINFO[0m:     127.0.0.1:55188 - "[1mGET /online HTTP/1.1[0m" [32m200 OK[0m
+[32mINFO[0m:     127.0.0.1:35972 - "[1mGET /online HTTP/1.1[0m" [32m200 OK[0m
+[32mINFO[0m:     127.0.0.1:35978 - "[1mGET /online HTTP/1.1[0m" [32m200 OK[0m
+[32mINFO[0m:     127.0.0.1:43776 - "[1mGET /online HTTP/1.1[0m" [32m200 OK[0m
+[32mINFO[0m:     127.0.0.1:47152 - "[1mGET /online HTTP/1.1[0m" [32m200 OK[0m
+[32mINFO[0m:     127.0.0.1:47154 - "[1mGET /online HTTP/1.1[0m" [32m200 OK[0m
+[32mINFO[0m:     127.0.0.1:60378 - "[1mGET /online HTTP/1.1[0m" [32m200 OK[0m
+[32mINFO[0m:     127.0.0.1:44392 - "[1mGET /online HTTP/1.1[0m" [32m200 OK[0m
+[32mINFO[0m:     127.0.0.1:44402 - "[1mGET /online HTTP/1.1[0m" [32m200 OK[0m
+[32mINFO[0m:     127.0.0.1:54886 - "[1mGET /online HTTP/1.1[0m" [32m200 OK[0m
+[32mINFO[0m:     127.0.0.1:42864 - "[1mGET /online HTTP/1.1[0m" [32m200 OK[0m
+[32mINFO[0m:     127.0.0.1:42866 - "[1mGET /online HTTP/1.1[0m" [32m200 OK[0m
+[32mINFO[0m:     127.0.0.1:45906 - "[1mGET /online HTTP/1.1[0m" [32m200 OK[0m
+[32mINFO[0m:     127.0.0.1:55748 - "[1mGET /online HTTP/1.1[0m" [32m200 OK[0m
+[32mINFO[0m:     127.0.0.1:55762 - "[1mGET /online HTTP/1.1[0m" [32m200 OK[0m
+[32mINFO[0m:     127.0.0.1:60228 - "[1mGET /online HTTP/1.1[0m" [32m200 OK[0m
+[32mINFO[0m:     127.0.0.1:37624 - "[1mGET /online HTTP/1.1[0m" [32m200 OK[0m
+[32mINFO[0m:     127.0.0.1:37634 - "[1mGET /online HTTP/1.1[0m" [32m200 OK[0m
+[32mINFO[0m:     127.0.0.1:53438 - "[1mGET /online HTTP/1.1[0m" [32m200 OK[0m
+[32mINFO[0m:     127.0.0.1:54892 - "[1mGET /online HTTP/1.1[0m" [32m200 OK[0m
+[32mINFO[0m:     127.0.0.1:54902 - "[1mGET /online HTTP/1.1[0m" [32m200 OK[0m
+[32mINFO[0m:     127.0.0.1:55224 - "[1mGET /online HTTP/1.1[0m" [32m200 OK[0m
+[32mINFO[0m:     127.0.0.1:55240 - "[1mGET /online HTTP/1.1[0m" [32m200 OK[0m
+[32mINFO[0m:     127.0.0.1:43946 - "[1mGET /online HTTP/1.1[0m" [32m200 OK[0m
+[32mINFO[0m:     127.0.0.1:42274 - "[1mGET /online HTTP/1.1[0m" [32m200 OK[0m
+[32mINFO[0m:     127.0.0.1:42286 - "[1mGET /online HTTP/1.1[0m" [32m200 OK[0m
+[32mINFO[0m:     127.0.0.1:39750 - "[1mGET /online HTTP/1.1[0m" [32m200 OK[0m
+[32mINFO[0m:     127.0.0.1:55330 - "[1mGET /online HTTP/1.1[0m" [32m200 OK[0m
+[32mINFO[0m:     127.0.0.1:55338 - "[1mGET /online HTTP/1.1[0m" [32m200 OK[0m
+[32mINFO[0m:     127.0.0.1:39842 - "[1mGET /online HTTP/1.1[0m" [32m200 OK[0m
+[32mINFO[0m:     127.0.0.1:39696 - "[1mGET /online HTTP/1.1[0m" [32m200 OK[0m
+[32mINFO[0m:     127.0.0.1:39704 - "[1mGET /online HTTP/1.1[0m" [32m200 OK[0m
+[32mINFO[0m:     127.0.0.1:44558 - "[1mGET /online HTTP/1.1[0m" [32m200 OK[0m
+[32mINFO[0m:     127.0.0.1:49754 - "[1mGET /online HTTP/1.1[0m" [32m200 OK[0m
+[32mINFO[0m:     127.0.0.1:49764 - "[1mGET /online HTTP/1.1[0m" [32m200 OK[0m
+[32mINFO[0m:     127.0.0.1:37884 - "[1mGET /online HTTP/1.1[0m" [32m200 OK[0m
+[32mINFO[0m:     127.0.0.1:55168 - "[1mGET /online HTTP/1.1[0m" [32m200 OK[0m
+[32mINFO[0m:     127.0.0.1:55176 - "[1mGET /online HTTP/1.1[0m" [32m200 OK[0m
+[32mINFO[0m:     127.0.0.1:59442 - "[1mGET /online HTTP/1.1[0m" [32m200 OK[0m
+[32mINFO[0m:     127.0.0.1:33774 - "[1mGET /online HTTP/1.1[0m" [32m200 OK[0m
+[32mINFO[0m:     127.0.0.1:33786 - "[1mGET /online HTTP/1.1[0m" [32m200 OK[0m
+[32mINFO[0m:     127.0.0.1:57474 - "[1mGET /online HTTP/1.1[0m" [32m200 OK[0m
+[32mINFO[0m:     127.0.0.1:34134 - "[1mGET /online HTTP/1.1[0m" [32m200 OK[0m
+[32mINFO[0m:     127.0.0.1:34142 - "[1mGET /online HTTP/1.1[0m" [32m200 OK[0m
+[32mINFO[0m:     127.0.0.1:46420 - "[1mGET /online HTTP/1.1[0m" [32m200 OK[0m
+[32mINFO[0m:     127.0.0.1:46434 - "[1mGET /online HTTP/1.1[0m" [32m200 OK[0m
+[32mINFO[0m:     127.0.0.1:52762 - "[1mGET /online HTTP/1.1[0m" [32m200 OK[0m
+[32mINFO[0m:     127.0.0.1:36112 - "[1mGET /online HTTP/1.1[0m" [32m200 OK[0m
+[32mINFO[0m:     127.0.0.1:36118 - "[1mGET /online HTTP/1.1[0m" [32m200 OK[0m
+[32mINFO[0m:     127.0.0.1:35126 - "[1mGET /online HTTP/1.1[0m" [32m200 OK[0m
+[32mINFO[0m:     127.0.0.1:41538 - "[1mGET /online HTTP/1.1[0m" [32m200 OK[0m
+[32mINFO[0m:     127.0.0.1:41544 - "[1mGET /online HTTP/1.1[0m" [32m200 OK[0m
+[32mINFO[0m:     127.0.0.1:46108 - "[1mGET /online HTTP/1.1[0m" [32m200 OK[0m
+[32mINFO[0m:     127.0.0.1:41658 - "[1mGET /online HTTP/1.1[0m" [32m200 OK[0m
+[32mINFO[0m:     127.0.0.1:41674 - "[1mGET /online HTTP/1.1[0m" [32m200 OK[0m
+[32mINFO[0m:     127.0.0.1:49408 - "[1mGET /online HTTP/1.1[0m" [32m200 OK[0m
+[32mINFO[0m:     127.0.0.1:49842 - "[1mGET /online HTTP/1.1[0m" [32m200 OK[0m
+[32mINFO[0m:     127.0.0.1:49850 - "[1mGET /online HTTP/1.1[0m" [32m200 OK[0m
+[32mINFO[0m:     127.0.0.1:56064 - "[1mGET /online HTTP/1.1[0m" [32m200 OK[0m
+[32mINFO[0m:     127.0.0.1:50032 - "[1mGET /online HTTP/1.1[0m" [32m200 OK[0m
+[32mINFO[0m:     127.0.0.1:50048 - "[1mGET /online HTTP/1.1[0m" [32m200 OK[0m
