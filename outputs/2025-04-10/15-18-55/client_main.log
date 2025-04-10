@@ -86,3 +86,4 @@
 [2025-04-10 15:20:46,488][flwr][DEBUG] - ChannelConnectivity.IDLE
 [2025-04-10 15:20:46,489][flwr][DEBUG] - ChannelConnectivity.CONNECTING
 [2025-04-10 15:20:46,494][flwr][DEBUG] - ChannelConnectivity.READY
+[2025-04-10 15:28:00,277][root][INFO] - ccl-e-server;b0:7b:25:0e:e7:96-client close
