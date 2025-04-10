@@ -55,6 +55,8 @@ class ClientServerAPI():
         # get the FL server IP
         response = requests.get(f"http://{self.ccl_address}:{self.server_manager_port}/FLSe/getPort/{self.task_id}")
         if response.status_code == 200:
+            print("Response:", response.text)
+            print("Response JSON:", response.json())
             FL_server_IP = f"{self.ccl_address}:{response.json()['port']}"
             logger.info(f'FL_server_IP:port - {FL_server_IP}')
             return FL_server_IP
