@@ -181,4 +181,3 @@ class GeneticCFLStrategy(FedAvg):
                 "num_rounds": num_rounds
             }
         return fit_config_fn
-ㄴ
