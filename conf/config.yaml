@@ -5,7 +5,7 @@ learning_rate: 0.001 # Input model's learning rate
 
 # model_type: 'Pytorch'
  # This value should be maintained
-model_type: 'Pytorch' # This value should be maintained
+model_type: 'hyperparameter' # This value should be maintained
 model:
   _target_: models.MNISTClassifier # Input your custom model
   output_size: 10 # Input your model's output size (only classification)

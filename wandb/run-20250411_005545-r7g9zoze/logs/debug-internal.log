@@ -1,0 +1,16 @@
+{"time":"2025-04-11T00:55:45.237598391+09:00","level":"INFO","msg":"stream: starting","core version":"0.19.9","symlink path":"/home/ccl/safer/FedOps/MNIST/wandb/run-20250411_005545-r7g9zoze/logs/debug-core.log"}
+{"time":"2025-04-11T00:55:45.673026849+09:00","level":"INFO","msg":"created new stream","id":"r7g9zoze"}
+{"time":"2025-04-11T00:55:45.673115549+09:00","level":"INFO","msg":"stream: started","id":"r7g9zoze"}
+{"time":"2025-04-11T00:55:45.673140644+09:00","level":"INFO","msg":"handler: started","stream_id":"r7g9zoze"}
+{"time":"2025-04-11T00:55:45.673169491+09:00","level":"INFO","msg":"writer: Do: started","stream_id":"r7g9zoze"}
+{"time":"2025-04-11T00:55:45.673152861+09:00","level":"INFO","msg":"sender: started","stream_id":"r7g9zoze"}
+{"time":"2025-04-11T00:55:46.07745462+09:00","level":"INFO","msg":"Starting system monitor"}
+{"time":"2025-04-11T00:56:05.610861381+09:00","level":"INFO","msg":"Stopping system monitor"}
+{"time":"2025-04-11T00:56:05.610957769+09:00","level":"INFO","msg":"Stopped system monitor"}
+{"time":"2025-04-11T00:56:06.453024618+09:00","level":"INFO","msg":"fileTransfer: Close: file transfer manager closed"}
+{"time":"2025-04-11T00:56:06.613996625+09:00","level":"INFO","msg":"handler: operation stats","stats":{"operations":[{"desc":"uploading history steps 0-1, summary, console lines 68-84","runtime_seconds":0.160624827}],"total_operations":1}}
+{"time":"2025-04-11T00:56:06.797873558+09:00","level":"INFO","msg":"stream: closing","id":"r7g9zoze"}
+{"time":"2025-04-11T00:56:06.797911629+09:00","level":"INFO","msg":"handler: closed","stream_id":"r7g9zoze"}
+{"time":"2025-04-11T00:56:06.797932358+09:00","level":"INFO","msg":"writer: Close: closed","stream_id":"r7g9zoze"}
+{"time":"2025-04-11T00:56:06.797963175+09:00","level":"INFO","msg":"sender: closed","stream_id":"r7g9zoze"}
+{"time":"2025-04-11T00:56:06.798061162+09:00","level":"INFO","msg":"stream: closed","id":"r7g9zoze"}
