@@ -52,3 +52,213 @@
 [2025-04-10 15:05:41,691][flwr][DEBUG] - ChannelConnectivity.IDLE
 [2025-04-10 15:05:41,692][flwr][DEBUG] - ChannelConnectivity.CONNECTING
 [2025-04-10 15:05:41,697][flwr][DEBUG] - ChannelConnectivity.READY
+[32mINFO[0m:     Shutting down
+[32mINFO[0m:     Waiting for background tasks to complete. (CTRL+C to force quit)
+[32mINFO[0m:     Finished server process [[36m343795[0m]
+[31mERROR[0m:    Traceback (most recent call last):
+  File "/home/ccl/anaconda3/envs/fedops_hyp/lib/python3.11/asyncio/runners.py", line 190, in run
+    return runner.run(main)
+           ^^^^^^^^^^^^^^^^
+  File "/home/ccl/anaconda3/envs/fedops_hyp/lib/python3.11/asyncio/runners.py", line 118, in run
+    return self._loop.run_until_complete(task)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "uvloop/loop.pyx", line 1512, in uvloop.loop.Loop.run_until_complete
+  File "uvloop/loop.pyx", line 1505, in uvloop.loop.Loop.run_until_complete
+  File "uvloop/loop.pyx", line 1379, in uvloop.loop.Loop.run_forever
+  File "uvloop/loop.pyx", line 557, in uvloop.loop.Loop._run
+  File "uvloop/loop.pyx", line 476, in uvloop.loop.Loop._on_idle
+  File "uvloop/cbhandles.pyx", line 83, in uvloop.loop.Handle._run
+  File "uvloop/cbhandles.pyx", line 63, in uvloop.loop.Handle._run
+  File "/home/ccl/anaconda3/envs/fedops_hyp/lib/python3.11/site-packages/uvicorn/server.py", line 69, in serve
+    with self.capture_signals():
+  File "/home/ccl/anaconda3/envs/fedops_hyp/lib/python3.11/contextlib.py", line 144, in __exit__
+    next(self.gen)
+  File "/home/ccl/anaconda3/envs/fedops_hyp/lib/python3.11/site-packages/uvicorn/server.py", line 330, in capture_signals
+    signal.raise_signal(captured_signal)
+  File "/home/ccl/anaconda3/envs/fedops_hyp/lib/python3.11/asyncio/runners.py", line 157, in _on_sigint
+    raise KeyboardInterrupt()
+KeyboardInterrupt
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/home/ccl/anaconda3/envs/fedops_hyp/lib/python3.11/site-packages/starlette/routing.py", line 699, in lifespan
+    await receive()
+  File "/home/ccl/anaconda3/envs/fedops_hyp/lib/python3.11/site-packages/uvicorn/lifespan/on.py", line 137, in receive
+    return await self.receive_queue.get()
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/ccl/anaconda3/envs/fedops_hyp/lib/python3.11/asyncio/queues.py", line 158, in get
+    await getter
+asyncio.exceptions.CancelledError
+
+[31mERROR[0m:    Exception in ASGI application
+Traceback (most recent call last):
+  File "/home/ccl/anaconda3/envs/fedops_hyp/lib/python3.11/asyncio/runners.py", line 190, in run
+    return runner.run(main)
+           ^^^^^^^^^^^^^^^^
+  File "/home/ccl/anaconda3/envs/fedops_hyp/lib/python3.11/asyncio/runners.py", line 118, in run
+    return self._loop.run_until_complete(task)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "uvloop/loop.pyx", line 1512, in uvloop.loop.Loop.run_until_complete
+  File "uvloop/loop.pyx", line 1505, in uvloop.loop.Loop.run_until_complete
+  File "uvloop/loop.pyx", line 1379, in uvloop.loop.Loop.run_forever
+  File "uvloop/loop.pyx", line 557, in uvloop.loop.Loop._run
+  File "uvloop/loop.pyx", line 476, in uvloop.loop.Loop._on_idle
+  File "uvloop/cbhandles.pyx", line 83, in uvloop.loop.Handle._run
+  File "uvloop/cbhandles.pyx", line 63, in uvloop.loop.Handle._run
+  File "/home/ccl/anaconda3/envs/fedops_hyp/lib/python3.11/site-packages/uvicorn/server.py", line 69, in serve
+    with self.capture_signals():
+  File "/home/ccl/anaconda3/envs/fedops_hyp/lib/python3.11/contextlib.py", line 144, in __exit__
+    next(self.gen)
+  File "/home/ccl/anaconda3/envs/fedops_hyp/lib/python3.11/site-packages/uvicorn/server.py", line 330, in capture_signals
+    signal.raise_signal(captured_signal)
+  File "/home/ccl/anaconda3/envs/fedops_hyp/lib/python3.11/asyncio/runners.py", line 157, in _on_sigint
+    raise KeyboardInterrupt()
+KeyboardInterrupt
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/home/ccl/anaconda3/envs/fedops_hyp/lib/python3.11/site-packages/uvicorn/protocols/http/httptools_impl.py", line 409, in run_asgi
+    result = await app(  # type: ignore[func-returns-value]
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/ccl/anaconda3/envs/fedops_hyp/lib/python3.11/site-packages/uvicorn/middleware/proxy_headers.py", line 60, in __call__
+    return await self.app(scope, receive, send)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/ccl/anaconda3/envs/fedops_hyp/lib/python3.11/site-packages/fastapi/applications.py", line 1054, in __call__
+    await super().__call__(scope, receive, send)
+  File "/home/ccl/anaconda3/envs/fedops_hyp/lib/python3.11/site-packages/starlette/applications.py", line 112, in __call__
+    await self.middleware_stack(scope, receive, send)
+  File "/home/ccl/anaconda3/envs/fedops_hyp/lib/python3.11/site-packages/starlette/middleware/errors.py", line 165, in __call__
+    await self.app(scope, receive, _send)
+  File "/home/ccl/anaconda3/envs/fedops_hyp/lib/python3.11/site-packages/starlette/middleware/exceptions.py", line 62, in __call__
+    await wrap_app_handling_exceptions(self.app, conn)(scope, receive, send)
+  File "/home/ccl/anaconda3/envs/fedops_hyp/lib/python3.11/site-packages/starlette/_exception_handler.py", line 42, in wrapped_app
+    await app(scope, receive, sender)
+  File "/home/ccl/anaconda3/envs/fedops_hyp/lib/python3.11/site-packages/starlette/routing.py", line 714, in __call__
+    await self.middleware_stack(scope, receive, send)
+  File "/home/ccl/anaconda3/envs/fedops_hyp/lib/python3.11/site-packages/starlette/routing.py", line 734, in app
+    await route.handle(scope, receive, send)
+  File "/home/ccl/anaconda3/envs/fedops_hyp/lib/python3.11/site-packages/starlette/routing.py", line 288, in handle
+    await self.app(scope, receive, send)
+  File "/home/ccl/anaconda3/envs/fedops_hyp/lib/python3.11/site-packages/starlette/routing.py", line 76, in app
+    await wrap_app_handling_exceptions(app, request)(scope, receive, send)
+  File "/home/ccl/anaconda3/envs/fedops_hyp/lib/python3.11/site-packages/starlette/_exception_handler.py", line 42, in wrapped_app
+    await app(scope, receive, sender)
+  File "/home/ccl/anaconda3/envs/fedops_hyp/lib/python3.11/site-packages/starlette/routing.py", line 74, in app
+    await response(scope, receive, send)
+  File "/home/ccl/anaconda3/envs/fedops_hyp/lib/python3.11/site-packages/starlette/responses.py", line 160, in __call__
+    await self.background()
+  File "/home/ccl/anaconda3/envs/fedops_hyp/lib/python3.11/site-packages/starlette/background.py", line 41, in __call__
+    await task()
+  File "/home/ccl/anaconda3/envs/fedops_hyp/lib/python3.11/site-packages/starlette/background.py", line 26, in __call__
+    await self.func(*self.args, **self.kwargs)
+  File "/home/ccl/safer/FedOps/MNIST/app.py", line 155, in fl_client_start
+    await loop.run_in_executor(None, client_start)
+asyncio.exceptions.CancelledError
+Error executing job with overrides: []
+Traceback (most recent call last):
+  File "/home/ccl/anaconda3/envs/fedops_hyp/lib/python3.11/site-packages/urllib3/connection.py", line 198, in _new_conn
+    sock = connection.create_connection(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/ccl/anaconda3/envs/fedops_hyp/lib/python3.11/site-packages/urllib3/util/connection.py", line 85, in create_connection
+    raise err
+  File "/home/ccl/anaconda3/envs/fedops_hyp/lib/python3.11/site-packages/urllib3/util/connection.py", line 73, in create_connection
+    sock.connect(sa)
+ConnectionRefusedError: [Errno 111] Connection refused
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/home/ccl/anaconda3/envs/fedops_hyp/lib/python3.11/site-packages/urllib3/connectionpool.py", line 787, in urlopen
+    response = self._make_request(
+               ^^^^^^^^^^^^^^^^^^^
+  File "/home/ccl/anaconda3/envs/fedops_hyp/lib/python3.11/site-packages/urllib3/connectionpool.py", line 493, in _make_request
+    conn.request(
+  File "/home/ccl/anaconda3/envs/fedops_hyp/lib/python3.11/site-packages/urllib3/connection.py", line 445, in request
+    self.endheaders()
+  File "/home/ccl/anaconda3/envs/fedops_hyp/lib/python3.11/http/client.py", line 1281, in endheaders
+    self._send_output(message_body, encode_chunked=encode_chunked)
+  File "/home/ccl/anaconda3/envs/fedops_hyp/lib/python3.11/http/client.py", line 1041, in _send_output
+    self.send(msg)
+  File "/home/ccl/anaconda3/envs/fedops_hyp/lib/python3.11/http/client.py", line 979, in send
+    self.connect()
+  File "/home/ccl/anaconda3/envs/fedops_hyp/lib/python3.11/site-packages/urllib3/connection.py", line 276, in connect
+    self.sock = self._new_conn()
+                ^^^^^^^^^^^^^^^^
+  File "/home/ccl/anaconda3/envs/fedops_hyp/lib/python3.11/site-packages/urllib3/connection.py", line 213, in _new_conn
+    raise NewConnectionError(
+urllib3.exceptions.NewConnectionError: <urllib3.connection.HTTPConnection object at 0x7f13221ebed0>: Failed to establish a new connection: [Errno 111] Connection refused
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/home/ccl/anaconda3/envs/fedops_hyp/lib/python3.11/site-packages/requests/adapters.py", line 667, in send
+    resp = conn.urlopen(
+           ^^^^^^^^^^^^^
+  File "/home/ccl/anaconda3/envs/fedops_hyp/lib/python3.11/site-packages/urllib3/connectionpool.py", line 841, in urlopen
+    retries = retries.increment(
+              ^^^^^^^^^^^^^^^^^^
+  File "/home/ccl/anaconda3/envs/fedops_hyp/lib/python3.11/site-packages/urllib3/util/retry.py", line 519, in increment
+    raise MaxRetryError(_pool, url, reason) from reason  # type: ignore[arg-type]
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+urllib3.exceptions.MaxRetryError: HTTPConnectionPool(host='localhost', port=8004): Max retries exceeded with url: /flclient_out (Caused by NewConnectionError('<urllib3.connection.HTTPConnection object at 0x7f13221ebed0>: Failed to establish a new connection: [Errno 111] Connection refused'))
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/home/ccl/safer/FedOps/MNIST/client_main.py", line 78, in main
+    fl_client.start()
+  File "/home/ccl/safer/FedOps/MNIST/app.py", line 245, in start
+    client_api.ClientMangerAPI().get_client_out()
+  File "/home/ccl/safer/FedOps/MNIST/client_api.py", line 36, in get_client_out
+    requests.get(self.client_manager_addr + '/flclient_out')
+  File "/home/ccl/anaconda3/envs/fedops_hyp/lib/python3.11/site-packages/requests/api.py", line 73, in get
+    return request("get", url, params=params, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/ccl/anaconda3/envs/fedops_hyp/lib/python3.11/site-packages/requests/api.py", line 59, in request
+    return session.request(method=method, url=url, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/ccl/anaconda3/envs/fedops_hyp/lib/python3.11/site-packages/requests/sessions.py", line 589, in request
+    resp = self.send(prep, **send_kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/ccl/anaconda3/envs/fedops_hyp/lib/python3.11/site-packages/requests/sessions.py", line 703, in send
+    r = adapter.send(request, **kwargs)
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/ccl/anaconda3/envs/fedops_hyp/lib/python3.11/site-packages/requests/adapters.py", line 700, in send
+    raise ConnectionError(e, request=request)
+requests.exceptions.ConnectionError: HTTPConnectionPool(host='localhost', port=8004): Max retries exceeded with url: /flclient_out (Caused by NewConnectionError('<urllib3.connection.HTTPConnection object at 0x7f13221ebed0>: Failed to establish a new connection: [Errno 111] Connection refused'))
+
+Set the environment variable HYDRA_FULL_ERROR=1 for a complete stack trace.
+Exception ignored in: Exception in thread <module 'threading' from '/home/ccl/anaconda3/envs/fedops_hyp/lib/python3.11/threading.py'>Thread-8 (_do_shutdown)
+:
+Traceback (most recent call last):
+  File "/home/ccl/anaconda3/envs/fedops_hyp/lib/python3.11/threading.py", line 1553, in _shutdown
+Traceback (most recent call last):
+      File "uvloop/loop.pyx", line 3254, in uvloop.loop.Loop._do_shutdown
+atexit_call()
+  File "/home/ccl/anaconda3/envs/fedops_hyp/lib/python3.11/concurrent/futures/thread.py", line 31, in _python_exit
+      File "uvloop/loop.pyx", line 1290, in uvloop.loop.Loop.call_soon_threadsafe
+t.join()
+  File "/home/ccl/anaconda3/envs/fedops_hyp/lib/python3.11/threading.py", line 1112, in join
+  File "uvloop/loop.pyx", line 673, in uvloop.loop.Loop._append_ready_handle
+    self._wait_for_tstate_lock()
+  File "uvloop/loop.pyx", line 705, in uvloop.loop.Loop._check_closed
+  File "/home/ccl/anaconda3/envs/fedops_hyp/lib/python3.11/threading.py", line 1132, in _wait_for_tstate_lock
+    if lock.acquire(block, timeout):RuntimeError
+:  Event loop is closed
+
+  During handling of the above exception, another exception occurred:
+ ^
+^^Traceback (most recent call last):
+^^  File "/home/ccl/anaconda3/envs/fedops_hyp/lib/python3.11/threading.py", line 1038, in _bootstrap_inner
+^^^^    ^self.run()^
+^^  File "/home/ccl/anaconda3/envs/fedops_hyp/lib/python3.11/threading.py", line 975, in run
+^^    ^self._target(*self._args, **self._kwargs)^
+^^  File "uvloop/loop.pyx", line 3256, in uvloop.loop.Loop._do_shutdown
+^^^^^  File "uvloop/loop.pyx", line 1290, in uvloop.loop.Loop.call_soon_threadsafe
+^^^^
+  File "uvloop/loop.pyx", line 673, in uvloop.loop.Loop._append_ready_handle
+KeyboardInterrupt:
+  File "uvloop/loop.pyx", line 705, in uvloop.loop.Loop._check_closed
+RuntimeError: Event loop is closed

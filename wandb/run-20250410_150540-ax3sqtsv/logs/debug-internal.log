@@ -5,3 +5,7 @@
 {"time":"2025-04-10T15:05:41.24916439+09:00","level":"INFO","msg":"sender: started","stream_id":"ax3sqtsv"}
 {"time":"2025-04-10T15:05:41.249260293+09:00","level":"INFO","msg":"handler: started","stream_id":"ax3sqtsv"}
 {"time":"2025-04-10T15:05:41.559131699+09:00","level":"INFO","msg":"Starting system monitor"}
+{"time":"2025-04-10T15:18:06.688336991+09:00","level":"INFO","msg":"stream: closing","id":"ax3sqtsv"}
+{"time":"2025-04-10T15:18:06.688377718+09:00","level":"INFO","msg":"Stopping system monitor"}
+{"time":"2025-04-10T15:18:06.688523528+09:00","level":"INFO","msg":"Stopped system monitor"}
+{"time":"2025-04-10T15:18:07.499164992+09:00","level":"INFO","msg":"fileTransfer: Close: file transfer manager closed"}
