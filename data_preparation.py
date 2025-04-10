@@ -43,16 +43,16 @@ def load_partition(dataset, validation_split, batch_size):
     # Download MNIST Dataset
     full_dataset = datasets.MNIST(root='./dataset/mnist', train=True, download=True, transform=transform)
     # 전체 길이
-    total_len = len(full_dataset)
-    third_len = total_len // 3
-    remainder = total_len % 3  # 데이터 개수가 3으로 안 나누어떨어질 경우
+    # total_len = len(full_dataset)
+    # third_len = total_len // 3
+    # remainder = total_len % 3  # 데이터 개수가 3으로 안 나누어떨어질 경우
 
-    # 나눌 크기 지정 (예: [1/3, 1/3, 1/3 + 나머지])
-    lengths = [third_len, third_len, third_len + remainder]
-    # 데이터셋 분할
-    subset1, subset2, subset3 = random_split(full_dataset, lengths, generator=torch.Generator().manual_seed(42))
+    # # 나눌 크기 지정 (예: [1/3, 1/3, 1/3 + 나머지])
+    # lengths = [third_len, third_len, third_len + remainder]
+    # # 데이터셋 분할
+    # subset1, subset2, subset3 = random_split(full_dataset, lengths, generator=torch.Generator().manual_seed(42))
         
-    full_dataset = subset1
+    # full_dataset = subset1
     # Splitting the full dataset into train, validation, and test sets
     test_split = 0.2
     train_size = int((1 - validation_split - test_split) * len(full_dataset))
