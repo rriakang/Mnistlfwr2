@@ -16,7 +16,7 @@ dataset:
 
 
 # client
-task_id: 'mnist' # Input your Task Name that you register in FedOps Website
+task_id: 'mnist2' # Input your Task Name that you register in FedOps Website
 
 wandb: 
   use: true # Whether to use wandb
