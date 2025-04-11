@@ -52,7 +52,7 @@ def load_partition(dataset, validation_split, batch_size):
     # 데이터셋 분할
     subset1, subset2, subset3 = random_split(full_dataset, lengths, generator=torch.Generator().manual_seed(42))
         
-    full_dataset = subset1
+    full_dataset = subset2
     # Splitting the full dataset into train, validation, and test sets
     test_split = 0.2
     train_size = int((1 - validation_split - test_split) * len(full_dataset))
